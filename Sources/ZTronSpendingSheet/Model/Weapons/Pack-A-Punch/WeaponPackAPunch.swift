@@ -6,7 +6,7 @@ public final class WeaponPackAPunch: PurchaseableWeaponDecorator, DiscountDecora
     private let decorated: any PurchaseableWeaponDecorator
     private static let PACK_A_PUNCH_PRICE: Double = 1000.0
     
-    public let player: Player
+    public let player: Player? 
     public let id: String
     
     public init(decoratedWeapon: any PurchaseableWeaponDecorator, coupon: any Discountable = NoPriceOffCoupon()) {
@@ -22,6 +22,14 @@ public final class WeaponPackAPunch: PurchaseableWeaponDecorator, DiscountDecora
     
     public func getDescription() -> String {
         return self.decorated.getDescription()
+    }
+    
+    public func getCategories() -> Set<PurchaseableCategory> {
+        return decorated.getCategories()
+    }
+    
+    public func getAssetsImage() -> String {
+        return decorated.getAssetsImage()
     }
     
     public func getPrice() -> Double {

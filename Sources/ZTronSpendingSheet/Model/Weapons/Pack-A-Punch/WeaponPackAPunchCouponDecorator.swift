@@ -1,12 +1,13 @@
 import Foundation
 
 public final class WeaponPackAPunchCouponDecorator: WeaponPackAPunchDecorator {
+    
     let discountDecorator: any Discountable
     
     public let id: String
-    public let player: Player
     public let decorated: WeaponPackAPunch
-    
+    public let player: Player?
+
     init(decorated: WeaponPackAPunch, coupon: any Discountable) {
         self.id = decorated.id + " w/ coupon"
         self.player = decorated.player
@@ -28,6 +29,14 @@ public final class WeaponPackAPunchCouponDecorator: WeaponPackAPunchDecorator {
     
     public func makeDeepCopy() -> Self {
         return Self(decorated: self.decorated.makeDeepCopy(), coupon: self.discountDecorator.makeDeepCopy())
+    }
+    
+    public func getCategories() -> Set<PurchaseableCategory> {
+        return decorated.getCategories()
+    }
+    
+    public func getAssetsImage() -> String {
+        return decorated.getAssetsImage()
     }
 
 }

@@ -28,14 +28,15 @@ public final class SpendingModel: @unchecked Sendable {
     /// - Returns: True, if no purchase with the same name existed for `thePurchase.player`, `false` otherwise.
     /// - Complexity: O(`purchases.count`) to test if another purchase already existed.
     @discardableResult public func appendPurchase(_ thePurchase: any Purchaseable) -> Bool {
-        guard (self.findPurchaseById(thePurchase.id, for: thePurchase.player) == nil) else { return false }
+        guard let thePlayer = thePurchase.player else { return false }
+        guard (self.findPurchaseById(thePurchase.id, for: thePlayer) == nil) else { return false }
         
-        if self.purchases[thePurchase.player] == nil {
-            self.purchases[thePurchase.player] = .init()
+        if self.purchases[thePlayer] == nil {
+            self.purchases[thePlayer] = .init()
         }
         
         self.purchasesLock.wait()
-        self.purchases[thePurchase.player]?.append(thePurchase)
+        self.purchases[thePlayer]?.append(thePurchase)
         self.purchasesLock.signal()
         
         return true
@@ -107,12 +108,13 @@ public final class SpendingModel: @unchecked Sendable {
     /// - Complexity: O(`purchases[withPurchase.player].count`) to find the element to replace.
     /// - Note: Use this method mainly to dynamically attach or detach (i.e. decorate) responsibilities to a purchase.
     @discardableResult public func replacePurchase(_ id: String, withPurchase: any Purchaseable) -> (any Purchaseable)? {
-        guard let indexOfElementToReplace = self.findPurchaseIndexById(id, for: withPurchase.player) else { return nil }
+        guard let thePlayer = withPurchase.player else { return nil }
+        guard let indexOfElementToReplace = self.findPurchaseIndexById(id, for: thePlayer) else { return nil }
         
         self.purchasesLock.wait()
         
-        let removedElement = self.purchases[withPurchase.player]?[indexOfElementToReplace].makeDeepCopy()
-        self.purchases[withPurchase.player]?[indexOfElementToReplace] = withPurchase.makeDeepCopy()
+        let removedElement = self.purchases[thePlayer]?[indexOfElementToReplace].makeDeepCopy()
+        self.purchases[thePlayer]?[indexOfElementToReplace] = withPurchase.makeDeepCopy()
         
         self.purchasesLock.signal()
         

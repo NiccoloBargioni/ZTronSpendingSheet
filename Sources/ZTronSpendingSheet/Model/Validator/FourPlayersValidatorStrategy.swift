@@ -1,7 +1,5 @@
-import Foundation
-
-internal final class FourPlayersValidatorStrategy: SpendingValidatorStrategy {
-    func validate(purchases: [any Purchaseable]) -> Bool {
+public final class FourPlayersValidatorStrategy: SpendingValidatorStrategy {
+    public func validate(purchases: [Player : [any Purchaseable]]) -> Bool {
         return false
     }
 }

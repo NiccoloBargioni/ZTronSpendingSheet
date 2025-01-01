@@ -1,7 +1,7 @@
 import Foundation
 
-internal final class TwoPlayersValidatorStrategy: SpendingValidatorStrategy {
-    func validate(purchases: [any Purchaseable]) -> Bool {
+public final class TwoPlayersValidatorStrategy: SpendingValidatorStrategy {
+    public func validate(purchases: [Player : [any Purchaseable]]) -> Bool {
         return false
     }
 }

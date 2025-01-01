@@ -1,5 +1,5 @@
 import Foundation
 
-internal protocol SpendingValidatorStrategy: Sendable {
-    func validate(purchases: [any Purchaseable]) -> Bool
+public protocol SpendingValidatorStrategy: Sendable {
+    func validate(purchases: [Player: [any Purchaseable]]) -> Bool
 }

@@ -186,6 +186,15 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return true
     }
     
+    
+    public func getPurchasesForPlayer(_ player: Player) -> [any Purchaseable]? {
+        guard let purchases = self.purchases[player] else { return nil }
+        
+        return purchases.map { thePurchase in
+            return thePurchase.makeDeepCopy()
+        }
+    }
+    
     fileprivate struct PurchaseIndex: Hashable {
         private let index: Int
         private let player: Player

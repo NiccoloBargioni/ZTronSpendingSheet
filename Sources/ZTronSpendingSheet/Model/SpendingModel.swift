@@ -50,7 +50,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     
     
     /// - Note: This method doesn't return a deep copy of the found element. It's responsibility of the client to deepCopy it if needed.
-    private final func findPurchaseById(_ id: String, for player: Player) -> (any Purchaseable)? {
+    public final func findPurchaseById(_ id: String, for player: Player) -> (any Purchaseable)? {
         guard self.purchases[player] != nil else { return nil }
         
         self.purchasesLock.wait()

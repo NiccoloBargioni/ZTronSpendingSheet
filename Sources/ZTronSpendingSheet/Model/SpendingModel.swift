@@ -8,7 +8,7 @@ public final class SpendingModel: @unchecked Sendable {
     private let purchasesLock: DispatchSemaphore = .init(value: 1)
     private let validatorLock: DispatchSemaphore = .init(value: 1)
     
-    init(validationStrategy: any SpendingValidatorStrategy) {
+    public init(validationStrategy: any SpendingValidatorStrategy) {
         self.validationStrategy = validationStrategy
     }
     
@@ -25,7 +25,7 @@ public final class SpendingModel: @unchecked Sendable {
     
     /// Adds another purchase to the lists of purchased items for the player the purchase belongs to..
     /// Decreases by 1 the availability of the specified purchase.
-    /// 
+    ///
     /// - Parameter thePurchase: The new purchase to add.
     /// - Returns: True, if no purchase with the same name existed for `thePurchase.player`, `false` otherwise.
     /// - Complexity: O(`purchases.count`) to test if another purchase already existed.

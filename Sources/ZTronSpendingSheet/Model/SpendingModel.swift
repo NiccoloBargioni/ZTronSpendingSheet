@@ -1,8 +1,8 @@
 import Foundation
 
-public final class SpendingModel: @unchecked Sendable {
+public final class SpendingModel: @unchecked Sendable, ObservableObject {
     
-    private var purchases: [Player: [any Purchaseable]] = [:]
+    @Published private var purchases: [Player: [any Purchaseable]] = [:]
     private var validationStrategy: any SpendingValidatorStrategy
     
     private let purchasesLock: DispatchSemaphore = .init(value: 1)

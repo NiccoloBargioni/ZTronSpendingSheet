@@ -1,7 +1,6 @@
 import Foundation
 
 public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
-    public let player: Player?
     
     private let name: String
     private let price: Double
@@ -15,13 +14,12 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
     
     public let id: String
     
-    public init(name: String, price: Double, description: String, assetsImageName: String, categories: Set<PurchaseableCategory>, availability: Int, player: Player?) {
+    public init(name: String, price: Double, description: String, assetsImageName: String, categories: Set<PurchaseableCategory>, availability: Int) {
         self.name = name
         self.price = price
         self.id = name
         self.assetsImageName = assetsImageName
         self.description = description
-        self.player = player
         self.availability = availability
         
         self.categories = .init()
@@ -71,7 +69,7 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
             self.categoriesSemaphore.signal()
         }
         
-        return Self(name: self.name, price: self.price, description: self.description, assetsImageName: self.assetsImageName, categories: self.categories, availability: self.availability, player: self.player)
+        return Self(name: self.name, price: self.price, description: self.description, assetsImageName: self.assetsImageName, categories: self.categories, availability: self.availability)
     }
     
     public func getAvailability() -> Int {

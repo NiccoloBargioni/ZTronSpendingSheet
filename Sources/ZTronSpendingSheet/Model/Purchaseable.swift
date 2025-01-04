@@ -11,4 +11,5 @@ public protocol Purchaseable: Identifiable, Sendable, Cloneable, Discountable {
     func getPrice() -> Double
     func getAvailability() -> Int
     func decrementAvailability() -> Void
+    func increaseAvailability() -> Void
 }

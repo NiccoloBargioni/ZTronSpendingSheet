@@ -75,10 +75,32 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
     }
     
     public func getAvailability() -> Int {
+        self.availabilitySemaphore.wait()
+        
+        defer {
+            self.availabilitySemaphore.signal()
+        }
+        
         return self.availability
     }
     
     public func decrementAvailability() {
+        self.availabilitySemaphore.wait()
+        
+        defer {
+            self.availabilitySemaphore.signal()
+        }
+        
         self.availability = max(self.availability - 1, 0)
+    }
+    
+    public func increaseAvailability() {
+        self.availabilitySemaphore.wait()
+        
+        defer {
+            self.availabilitySemaphore.signal()
+        }
+        
+        self.availability += 1
     }
 }

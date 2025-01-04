@@ -45,4 +45,8 @@ public final class WeaponPackAPunchCouponDecorator: WeaponPackAPunchDecorator {
     public func decrementAvailability() {
         self.decorated.decrementAvailability()
     }
+    
+    public func increaseAvailability() {
+        self.decorated.increaseAvailability()
+    }
 }

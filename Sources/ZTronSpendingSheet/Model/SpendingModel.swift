@@ -24,6 +24,8 @@ public final class SpendingModel: @unchecked Sendable {
     }
     
     /// Adds another purchase to the lists of purchased items for the player the purchase belongs to..
+    /// Decreases by 1 the availability of the specified purchase.
+    /// 
     /// - Parameter thePurchase: The new purchase to add.
     /// - Returns: True, if no purchase with the same name existed for `thePurchase.player`, `false` otherwise.
     /// - Complexity: O(`purchases.count`) to test if another purchase already existed.
@@ -35,9 +37,13 @@ public final class SpendingModel: @unchecked Sendable {
             self.purchases[thePlayer] = .init()
         }
         
-        self.purchasesLock.wait()
-        self.purchases[thePlayer]?.append(thePurchase)
-        self.purchasesLock.signal()
+        if thePurchase.getAvailability() > 0 {
+            self.purchasesLock.wait()
+            self.purchases[thePlayer]?.append(thePurchase)
+            self.purchasesLock.signal()
+            
+            thePurchase.decrementAvailability()
+        }
         
         return true
     }
@@ -78,6 +84,7 @@ public final class SpendingModel: @unchecked Sendable {
     /// Removes the element with the specified `id` if any is contained in the collection.
     /// If an element was removed successfully, a deep copy of such element is returned.
     /// If no such element existed in the collection, this method returns nil.
+    /// This method increases by 1 the availability of the removed purchase.
     ///
     ///  - Parameter id: The id to search in the purchases collection.
     ///  - Parameter for: The player that made the purchase to remove.
@@ -88,6 +95,7 @@ public final class SpendingModel: @unchecked Sendable {
         guard self.purchases[player] != nil else { return nil }
         
         guard let indexToRemove = self.findPurchaseIndexById(id, for: player) else { return nil }
+        self.purchases[player]?[indexToRemove].increaseAvailability()
         let purchaseClone = self.purchases[player]?[indexToRemove].makeDeepCopy()
                 
         self.purchasesLock.wait()

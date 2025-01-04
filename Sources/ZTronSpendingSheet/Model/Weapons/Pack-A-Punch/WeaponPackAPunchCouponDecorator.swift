@@ -5,11 +5,9 @@ public final class WeaponPackAPunchCouponDecorator: WeaponPackAPunchDecorator {
     
     public let id: String
     public let decorated: WeaponPackAPunch
-    public let player: Player?
 
     init(decorated: WeaponPackAPunch, coupon: any Discountable) {
         self.id = decorated.id + " w/ coupon"
-        self.player = decorated.player
         self.decorated = decorated.makeDeepCopy()
         self.discountDecorator = coupon.makeDeepCopy()
     }

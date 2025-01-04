@@ -29,17 +29,16 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     /// - Parameter thePurchase: The new purchase to add.
     /// - Returns: True, if no purchase with the same name existed for `thePurchase.player`, `false` otherwise.
     /// - Complexity: O(`purchases.count`) to test if another purchase already existed.
-    @discardableResult public func appendPurchase(_ thePurchase: any Purchaseable) -> Bool {
-        guard let thePlayer = thePurchase.player else { return false }
-        guard (self.findPurchaseById(thePurchase.id, for: thePlayer) == nil) else { return false }
+    @discardableResult public func appendPurchase(_ thePurchase: any Purchaseable, to player: Player) -> Bool {
+        guard (self.findPurchaseById(thePurchase.id, for: player) == nil) else { return false }
         
-        if self.purchases[thePlayer] == nil {
-            self.purchases[thePlayer] = .init()
+        if self.purchases[player] == nil {
+            self.purchases[player] = .init()
         }
         
         if thePurchase.getAvailability() > 0 {
             self.purchasesLock.wait()
-            self.purchases[thePlayer]?.append(thePurchase)
+            self.purchases[player]?.append(thePurchase)
             self.purchasesLock.signal()
             
             thePurchase.decrementAvailability()
@@ -66,6 +65,13 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     
+    /// - Note: This method doesn't return a deep copy of the found element. It's responsibility of the client to deepCopy it if needed.
+    private final func findPurchaseById(_ id: String) -> (any Purchaseable)? {
+        return self.findPurchaseById(id, for: .player1) ?? self.findPurchaseById(id, for: .player2) ?? self.findPurchaseById(id, for: .player3) ?? self.findPurchaseById(id, for: .player3) ?? self.findPurchaseById(id, for: .player4)
+    }
+
+    
+    
     private final func findPurchaseIndexById(_ id: String, for player: Player) -> Int? {
         guard self.purchases[player] != nil else { return nil }
         
@@ -79,6 +85,27 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         
         return elementIndex
     }
+    
+    private final func findPurchaseIndexById(_ id: String) -> PurchaseIndex? {
+        if let purchaseInPlayer1 = self.findPurchaseIndexById(id, for: .player1) {
+            return PurchaseIndex(index: purchaseInPlayer1, player: .player1)
+        } else {
+            if let purchaseInPlayer2 = self.findPurchaseIndexById(id, for: .player2) {
+                return PurchaseIndex(index: purchaseInPlayer2, player: .player2)
+            } else {
+                if let purchaseInPlayer3 = self.findPurchaseIndexById(id, for: .player3) {
+                    return PurchaseIndex(index: purchaseInPlayer3, player: .player3)
+                } else {
+                    if let purchaseInPlayer4 = self.findPurchaseIndexById(id, for: .player4) {
+                        return PurchaseIndex(index: purchaseInPlayer4, player: .player4)
+                    } else {
+                        return nil
+                    }
+                }
+            }
+        }
+    }
+    
     
     
     /// Removes the element with the specified `id` if any is contained in the collection.
@@ -116,7 +143,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     /// - Complexity: O(`purchases[withPurchase.player].count`) to find the element to replace.
     /// - Note: Use this method mainly to dynamically attach or detach (i.e. decorate) responsibilities to a purchase.
     @discardableResult public func replacePurchase(_ id: String, withPurchase: any Purchaseable) -> (any Purchaseable)? {
-        guard let thePlayer = withPurchase.player else { return nil }
+        guard let thePlayer = self.findPurchaseIndexById(id)?.getPlayer() else { return nil }
         guard let indexOfElementToReplace = self.findPurchaseIndexById(id, for: thePlayer) else { return nil }
         
         self.purchasesLock.wait()
@@ -136,5 +163,44 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         self.validatorLock.wait()
         self.validationStrategy = theStrategy
         self.validatorLock.signal()
+    }
+    
+    
+    @discardableResult public func movePurchase(id: String, to player: Player) -> Bool {
+        guard let thePurchaseIndex = self.findPurchaseIndexById(id) else { return false }
+        guard let thePurchase = self.purchases[thePurchaseIndex.getPlayer()]?[thePurchaseIndex.getIndex()] else { return false }
+        
+        
+        if thePurchaseIndex.getPlayer() != player {
+            self.purchases[thePurchaseIndex.getPlayer()]?.removeAll { purchaseable in
+                return purchaseable.id == thePurchase.id
+            }
+        }
+        
+        if self.purchases[player] == nil {
+            self.purchases[player] = .init()
+        }
+        
+        self.purchases[player]?.append(thePurchase)
+        
+        return true
+    }
+    
+    fileprivate struct PurchaseIndex: Hashable {
+        private let index: Int
+        private let player: Player
+        
+        fileprivate init(index: Int, player: Player) {
+            self.index = index
+            self.player = player
+        }
+        
+        fileprivate func getIndex() -> Int {
+            return self.index
+        }
+        
+        fileprivate func getPlayer() -> Player {
+            return self.player
+        }
     }
 }

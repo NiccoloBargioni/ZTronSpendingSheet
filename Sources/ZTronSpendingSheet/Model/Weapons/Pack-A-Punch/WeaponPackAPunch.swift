@@ -6,14 +6,12 @@ public final class WeaponPackAPunch: PurchaseableWeaponDecorator, DiscountDecora
     private let decorated: any PurchaseableWeaponDecorator
     private static let PACK_A_PUNCH_PRICE: Double = 1000.0
     
-    public let player: Player? 
     public let id: String
     
     public init(decoratedWeapon: any PurchaseableWeaponDecorator, coupon: any Discountable = NoPriceOffCoupon()) {
         self.decorated = decoratedWeapon.makeDeepCopy()
         self.discountDecorator = coupon.makeDeepCopy()
         self.id = decoratedWeapon.getName() + " w/ pack-a-punch"
-        self.player = decoratedWeapon.player
     }
     
     public func getName() -> String {

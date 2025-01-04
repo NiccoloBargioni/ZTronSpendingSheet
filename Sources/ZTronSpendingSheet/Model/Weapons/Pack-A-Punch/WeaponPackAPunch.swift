@@ -43,4 +43,12 @@ public final class WeaponPackAPunch: PurchaseableWeaponDecorator, DiscountDecora
     public func getDecoratedWeapon() -> any PurchaseableWeaponDecorator {
         return self.decorated.makeDeepCopy()
     }
+    
+    public func getAvailability() -> Int {
+        return self.decorated.getAvailability()
+    }
+    
+    public func decrementAvailability() {
+        self.decorated.decrementAvailability()
+    }
 }

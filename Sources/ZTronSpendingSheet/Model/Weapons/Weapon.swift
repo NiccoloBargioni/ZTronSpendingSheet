@@ -8,18 +8,21 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
     private let description: String
     private let assetsImageName: String
     private var categories: Set<PurchaseableCategory>
+    private var availability: Int
     
     private let categoriesSemaphore = DispatchSemaphore(value: 1)
+    private let availabilitySemaphore = DispatchSemaphore(value: 1)
     
     public let id: String
     
-    public init(name: String, price: Double, description: String, assetsImageName: String, categories: Set<PurchaseableCategory>, player: Player?) {
+    public init(name: String, price: Double, description: String, assetsImageName: String, categories: Set<PurchaseableCategory>, availability: Int, player: Player?) {
         self.name = name
         self.price = price
         self.id = name
         self.assetsImageName = assetsImageName
         self.description = description
         self.player = player
+        self.availability = availability
         
         self.categories = .init()
         categories.forEach { category in
@@ -61,11 +64,21 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
     public func makeDeepCopy() -> Self {
         // Constructor makes a defensive copy of categories anyway
         self.categoriesSemaphore.wait()
+        self.availabilitySemaphore.wait()
         
         defer {
+            self.availabilitySemaphore.signal()
             self.categoriesSemaphore.signal()
         }
         
-        return Self(name: self.name, price: self.price, description: self.description, assetsImageName: self.assetsImageName, categories: self.categories, player: self.player)
+        return Self(name: self.name, price: self.price, description: self.description, assetsImageName: self.assetsImageName, categories: self.categories, availability: self.availability, player: self.player)
+    }
+    
+    public func getAvailability() -> Int {
+        return self.availability
+    }
+    
+    public func decrementAvailability() {
+        self.availability = max(self.availability - 1, 0)
     }
 }

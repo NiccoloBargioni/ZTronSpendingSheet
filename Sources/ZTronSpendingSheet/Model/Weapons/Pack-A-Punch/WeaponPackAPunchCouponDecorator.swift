@@ -1,7 +1,6 @@
 import Foundation
 
 public final class WeaponPackAPunchCouponDecorator: WeaponPackAPunchDecorator {
-    
     let discountDecorator: any Discountable
     
     public let id: String
@@ -39,4 +38,11 @@ public final class WeaponPackAPunchCouponDecorator: WeaponPackAPunchDecorator {
         return decorated.getAssetsImage()
     }
 
+    public func getAvailability() -> Int {
+        return self.decorated.getAvailability()
+    }
+    
+    public func decrementAvailability() {
+        self.decorated.decrementAvailability()
+    }
 }

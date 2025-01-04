@@ -6,6 +6,7 @@ public enum PurchaseableCategory: String, CaseIterable, Identifiable {
     case mandatory = "MANDATORY"
     case perks = "PERKS"
     case smg = "SMG"
+    case ar = "ASSAULT RIFLE"
     case lmg = "LMG"
     case pistol = "PISTOL"
     case sniper = "SNIPER"

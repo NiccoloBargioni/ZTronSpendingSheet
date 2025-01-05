@@ -121,7 +121,7 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
         return self.amount
     }
     
-    public func increaseAmount() {
+    public func decreaseAmount() {
         self.amountSemaphore.wait()
         
         self.amount = max(0, self.amount - 1)
@@ -129,7 +129,7 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
         self.amountSemaphore.signal()
     }
     
-    public func decreaseAmount() {
+    public func increaseAmount() {
         self.amountSemaphore.wait()
         
         self.amount += 1

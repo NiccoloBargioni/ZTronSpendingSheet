@@ -46,11 +46,23 @@ public final class WeaponPackAPunch: PurchaseableWeaponDecorator, DiscountDecora
         return self.decorated.getAvailability()
     }
     
-    public func decrementAvailability() {
-        self.decorated.decrementAvailability()
+    public func decrementAvailability(amount: Int = 1) {
+        self.decorated.decrementAvailability(amount: amount)
     }
     
-    public func increaseAvailability() {
-        self.decorated.increaseAvailability()
+    public func increaseAvailability(amount: Int = 1) {
+        self.decorated.increaseAvailability(amount: amount)
+    }
+    
+    public func getAmount() -> Int {
+        return self.decorated.getAmount()
+    }
+    
+    public func increaseAmount() {
+        self.decorated.increaseAmount()
+    }
+    
+    public func decreaseAmount() {
+        self.decorated.decreaseAmount()
     }
 }

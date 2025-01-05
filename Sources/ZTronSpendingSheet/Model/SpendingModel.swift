@@ -36,12 +36,19 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
             self.purchases[player] = .init()
         }
         
-        if thePurchase.getAvailability() > 0 {
-            self.purchasesLock.wait()
-            self.purchases[player]?.append(thePurchase)
-            self.purchasesLock.signal()
-            
-            thePurchase.decrementAvailability()
+        if let existingPurchase = purchases[player]?.first(where: { purchaseable in
+            return purchaseable.id == thePurchase.id
+        }) {
+            existingPurchase.increaseAmount()
+        } else {
+            if thePurchase.getAvailability() > 0 {
+                self.purchasesLock.wait()
+                self.purchases[player]?.append(thePurchase)
+                self.purchasesLock.signal()
+                
+                thePurchase.decrementAvailability(amount: 1)
+                thePurchase.increaseAmount()
+            }
         }
         
         return true
@@ -122,7 +129,10 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         guard self.purchases[player] != nil else { return nil }
         
         guard let indexToRemove = self.findPurchaseIndexById(id, for: player) else { return nil }
-        self.purchases[player]?[indexToRemove].increaseAvailability()
+        
+        if let thePurchaseToRemove = self.purchases[player]?[indexToRemove] {
+            thePurchaseToRemove.increaseAvailability(amount: thePurchaseToRemove.getAmount())
+        }
         let purchaseClone = self.purchases[player]?[indexToRemove].makeDeepCopy()
                 
         self.purchasesLock.wait()
@@ -193,6 +203,25 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return purchases.map { thePurchase in
             return thePurchase.makeDeepCopy()
         }
+    }
+    
+    @discardableResult public func increaseAmountOfPurchaseById(_ id: String, for player: Player) -> Bool {
+        guard let thePurchase = self.findPurchaseById(id, for: player) else { return false }
+        
+        thePurchase.increaseAmount()
+        thePurchase.decrementAvailability(amount: 1)
+        
+        return true
+    }
+    
+    
+    @discardableResult public func decreaseAmountOfPurchaseById(_ id: String, for player: Player) -> Bool {
+        guard let thePurchase = self.findPurchaseById(id, for: player) else { return false }
+        
+        thePurchase.decreaseAmount()
+        thePurchase.increaseAvailability(amount: 1)
+        
+        return true
     }
     
     fileprivate struct PurchaseIndex: Hashable {

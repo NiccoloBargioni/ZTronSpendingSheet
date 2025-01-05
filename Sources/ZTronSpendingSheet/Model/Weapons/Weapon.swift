@@ -1,26 +1,29 @@
 import Foundation
 
 public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
-    
     private let name: String
     private let price: Double
     private let description: String
     private let assetsImageName: String
+    private var amount: Int
     private var categories: Set<PurchaseableCategory>
     private var availability: Int
     
     private let categoriesSemaphore = DispatchSemaphore(value: 1)
     private let availabilitySemaphore = DispatchSemaphore(value: 1)
+    private let amountSemaphore = DispatchSemaphore(value: 1)
+    
     
     public let id: String
     
-    public init(name: String, price: Double, description: String, assetsImageName: String, categories: Set<PurchaseableCategory>, availability: Int) {
+    public init(name: String, price: Double, description: String, assetsImageName: String, categories: Set<PurchaseableCategory>, availability: Int, amount: Int = 0) {
         self.name = name
         self.price = price
         self.id = name
         self.assetsImageName = assetsImageName
         self.description = description
         self.availability = availability
+        self.amount = amount
         
         self.categories = .init()
         categories.forEach { category in
@@ -63,13 +66,15 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
         // Constructor makes a defensive copy of categories anyway
         self.categoriesSemaphore.wait()
         self.availabilitySemaphore.wait()
+        self.amountSemaphore.wait()
         
         defer {
+            self.amountSemaphore.signal()
             self.availabilitySemaphore.signal()
             self.categoriesSemaphore.signal()
         }
         
-        return Self(name: self.name, price: self.price, description: self.description, assetsImageName: self.assetsImageName, categories: self.categories, availability: self.availability)
+        return Self(name: self.name, price: self.price, description: self.description, assetsImageName: self.assetsImageName, categories: self.categories, availability: self.availability, amount: self.amount)
     }
     
     public func getAvailability() -> Int {
@@ -82,23 +87,54 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
         return self.availability
     }
     
-    public func decrementAvailability() {
+    public func decrementAvailability(amount: Int = 1) {
+        assert(amount >= 0)
         self.availabilitySemaphore.wait()
         
         defer {
             self.availabilitySemaphore.signal()
         }
         
-        self.availability = max(self.availability - 1, 0)
+        self.availability = max(self.availability - amount, 0)
     }
     
-    public func increaseAvailability() {
+    public func increaseAvailability(amount: Int = 1) {
+        assert(amount >= 0)
+        
         self.availabilitySemaphore.wait()
         
         defer {
             self.availabilitySemaphore.signal()
         }
         
-        self.availability += 1
+        self.availability += amount
+    }
+    
+    
+    public func getAmount() -> Int {
+        self.amountSemaphore.wait()
+        
+        defer {
+            self.amountSemaphore.signal()
+        }
+        
+        return self.amount
+    }
+    
+    public func increaseAmount() {
+        self.amountSemaphore.wait()
+        
+        self.amount = max(0, self.amount - 1)
+        
+        self.amountSemaphore.signal()
+    }
+    
+    public func decreaseAmount() {
+        self.amountSemaphore.wait()
+        
+        self.amount += 1
+        
+        self.amountSemaphore.signal()
+
     }
 }

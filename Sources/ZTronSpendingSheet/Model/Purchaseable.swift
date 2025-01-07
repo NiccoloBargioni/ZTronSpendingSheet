@@ -14,5 +14,13 @@ public protocol Purchaseable: Identifiable, Sendable, Cloneable, Discountable {
     func getAmount() -> Int
     func increaseAmount() -> Void
     func decreaseAmount() -> Void
+    
+    func getCompatibleCoupons() -> [CouponType]
 }
 
+
+
+public extension Purchaseable {
+    func decrementAvailability(amount: Int = 1) {  }
+    func increaseAvailability(amount: Int = 1) {  }
+}

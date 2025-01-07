@@ -2,11 +2,15 @@ import Foundation
 
 public final class SpendingModel: @unchecked Sendable, ObservableObject {
     
+    @Published private var coupon: [DiscountCoupon] = []
+    
     @Published private var purchases: [Player: [any Purchaseable]] = [:]
     private var validationStrategy: any SpendingValidatorStrategy
     
     private let purchasesLock: DispatchSemaphore = .init(value: 1)
     private let validatorLock: DispatchSemaphore = .init(value: 1)
+    
+    
     
     public init(validationStrategy: any SpendingValidatorStrategy) {
         self.validationStrategy = validationStrategy
@@ -31,6 +35,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     /// - Complexity: O(`purchases.count`) to test if another purchase already existed.
     @discardableResult public func appendPurchase(_ thePurchase: any Purchaseable, to player: Player) -> Bool {
         guard (self.findPurchaseById(thePurchase.id, for: player) == nil) else { return false }
+        guard thePurchase.getAvailability() > 0 else { return false }
         
         if self.purchases[player] == nil {
             self.purchases[player] = .init()
@@ -40,6 +45,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
             return purchaseable.id == thePurchase.id
         }) {
             existingPurchase.increaseAmount()
+            existingPurchase.decrementAvailability(amount: 1)
         } else {
             if thePurchase.getAvailability() > 0 {
                 self.purchasesLock.wait()
@@ -77,7 +83,6 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return self.findPurchaseById(id, for: .player1) ?? self.findPurchaseById(id, for: .player2) ?? self.findPurchaseById(id, for: .player3) ?? self.findPurchaseById(id, for: .player3) ?? self.findPurchaseById(id, for: .player4)
     }
 
-    
     
     private final func findPurchaseIndexById(_ id: String, for player: Player) -> Int? {
         guard self.purchases[player] != nil else { return nil }

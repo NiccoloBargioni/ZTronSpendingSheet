@@ -137,4 +137,8 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
         self.amountSemaphore.signal()
 
     }
+    
+    public func getCompatibleCoupons() -> [CouponType] {
+        return [.refundCoupon]
+    }
 }

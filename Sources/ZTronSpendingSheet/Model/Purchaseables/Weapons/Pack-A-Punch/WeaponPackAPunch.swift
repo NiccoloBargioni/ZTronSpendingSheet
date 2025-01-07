@@ -65,4 +65,8 @@ public final class WeaponPackAPunch: PurchaseableWeaponDecorator, DiscountDecora
     public func decreaseAmount() {
         self.decorated.decreaseAmount()
     }
+    
+    public func getCompatibleCoupons() -> [CouponType] {
+        return self.decorated.getCompatibleCoupons()
+    }
 }

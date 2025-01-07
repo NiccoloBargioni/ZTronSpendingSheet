@@ -248,13 +248,27 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     
     
     // MARK: - HANDLING CONSUMABLES:
-    @discardableResult public func addConsumable(_ theConsumable: any Coupon) -> Bool {
+    
+    private final func makeCouponForType(_ type: CouponType, withRarity: Rarity = .common) -> any Coupon {
+        switch type {
+        case .skeletonKey:
+            return SkeletonKey(rarity: withRarity)
+        case .refundCoupon:
+            return RefundCoupon(rarity: withRarity)
+        case .mysteryBoxKey:
+            return MysteryBoxKey(rarity: withRarity)
+        case .blitzMachineCoupon:
+            return BlitzMachineKey(rarity: withRarity)
+        }
+    }
+    
+    @discardableResult public final func addConsumable(_ theConsumableType: CouponType, rarity: Rarity = .common) -> Bool {
         guard self.coupon.count < 2 else { return false }
         
         if !self.coupon.contains(where: { theCoupon in
-            return theCoupon.type == theConsumable.type
+            return theCoupon.type == theConsumableType
         }) {
-            self.coupon.append(theConsumable)
+            self.coupon.append(makeCouponForType(theConsumableType, withRarity: rarity))
         } else {
             return false
         }
@@ -262,7 +276,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return true
     }
     
-    @discardableResult public func changeConsumableRarity(consumable: CouponType, to rarity: Rarity) -> Bool {
+    @discardableResult public final func changeConsumableRarity(consumable: CouponType, to rarity: Rarity) -> Bool {
         guard let theCoupon = self.coupon.first(where: { coupon in
             coupon.type == consumable
         }) else {
@@ -276,9 +290,9 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     
     
     // TODO: Release all usages
-    public func removeConsumable(_ theConsumable: any Coupon) {
+    public func removeConsumable(_ theConsumableType: CouponType) {
         self.coupon.removeAll(where: { coupon in
-            return coupon.type == theConsumable.type
+            return coupon.type == theConsumableType
         })
     }
 }

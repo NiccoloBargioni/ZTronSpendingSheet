@@ -1,8 +1,7 @@
 import Foundation
 
 public final class SpendingModel: @unchecked Sendable, ObservableObject {
-    
-    @Published private var coupon: [DiscountCoupon] = []
+    @Published private var coupon: [any Coupon] = []
     
     @Published private var purchases: [Player: [any Purchaseable]] = [:]
     private var validationStrategy: any SpendingValidatorStrategy
@@ -245,5 +244,41 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         fileprivate func getPlayer() -> Player {
             return self.player
         }
+    }
+    
+    
+    // MARK: - HANDLING CONSUMABLES:
+    @discardableResult public func addConsumable(_ theConsumable: any Coupon) -> Bool {
+        guard self.coupon.count < 2 else { return false }
+        
+        if !self.coupon.contains(where: { theCoupon in
+            return theCoupon.type == theConsumable.type
+        }) {
+            self.coupon.append(theConsumable)
+        } else {
+            return false
+        }
+        
+        return true
+    }
+    
+    @discardableResult public func changeConsumableRarity(consumable: CouponType, to rarity: Rarity) -> Bool {
+        guard let theCoupon = self.coupon.first(where: { coupon in
+            coupon.type == consumable
+        }) else {
+            return false
+        }
+        
+        theCoupon.changeRarity(to: rarity)
+        
+        return true
+    }
+    
+    
+    // TODO: Release all usages
+    public func removeConsumable(_ theConsumable: any Coupon) {
+        self.coupon.removeAll(where: { coupon in
+            return coupon.type == theConsumable.type
+        })
     }
 }

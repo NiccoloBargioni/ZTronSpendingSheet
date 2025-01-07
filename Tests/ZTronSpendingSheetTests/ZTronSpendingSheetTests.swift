@@ -121,7 +121,7 @@ import Testing
     #expect(
         spendingModel.replacePurchase("STG-40", withPurchase: WeaponPackAPunch(decoratedWeapon:
             Weapon(name: "STG-40", price: 0, player: .player1),
-            coupon: DiscountCoupon()
+            coupon: RefundCoupon()
        )) != nil
     )
     
@@ -135,7 +135,7 @@ import Testing
     
     let weaponWithCoupon = WeaponPackAPunch(decoratedWeapon:
             Weapon(name: "STG-40", price: 750, player: .player1),
-            coupon: DiscountCoupon()
+            coupon: RefundCoupon()
         )
     
     print(weaponWithCoupon.getPrice())

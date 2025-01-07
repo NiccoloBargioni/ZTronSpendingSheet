@@ -1,6 +1,8 @@
 import Foundation
 
-internal final class DiscountCoupon: Discountable, @unchecked Sendable {
+internal final class MysteryBoxKey: Coupon, @unchecked Sendable {
+    internal let type: CouponType = .mysteryBoxKey
+    
     public var remainingActivations: Int
     
     private let remainingActivationsLock = DispatchSemaphore(value: 1)
@@ -26,11 +28,23 @@ internal final class DiscountCoupon: Discountable, @unchecked Sendable {
     }
     
     internal func getPriceOffPercentage() -> Double {
-        return 0.25
+        return 0.5
     }
     
-    /*
-    internal func use(for purchase: any Purchaseable) -> any Purchaseable {
+    func changeRarity(to newRarity: Rarity) {
+        self.remainingActivationsLock.wait()
         
-    }*/
+        switch rarity {
+            case .common:
+                self.remainingActivations = 1
+            case .rare:
+                self.remainingActivations = 2
+            case .legendary:
+                self.remainingActivations = 3
+            case .epic:
+                self.remainingActivations = 4
+            }
+
+        self.remainingActivationsLock.signal()
+    }
 }

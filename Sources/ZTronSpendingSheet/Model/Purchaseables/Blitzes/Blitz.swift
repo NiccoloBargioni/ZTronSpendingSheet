@@ -12,6 +12,7 @@ public final class Blitz: Purchaseable, @unchecked Sendable {
     private let amountSemaphore = DispatchSemaphore(value: 1)
     
     public let id: String
+    public var coupon: (any Coupon)? = nil 
     
     public init(name: String, price: Double, description: String, assetsImageName: String, amount: Int = 0) {
         self.name = name
@@ -53,7 +54,11 @@ public final class Blitz: Purchaseable, @unchecked Sendable {
     }
     
     public func getPrice() -> Double {
-        return self.price
+        if let coupon = self.coupon {
+            return self.price * (1 - coupon.getPriceOffPercentage())
+        } else {
+            return self.price
+        }
     }
     
     public func makeDeepCopy() -> Self {
@@ -102,6 +107,26 @@ public final class Blitz: Purchaseable, @unchecked Sendable {
     
     public func getCompatibleCoupons() -> [CouponType] {
         return [.refundCoupon, .blitzMachineCoupon]
+    }
+
+    public func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool {
+        if self.getCompatibleCoupons().contains(coupon.type) {
+            self.coupon = coupon
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    @discardableResult public func removeCoupon(_ coupon: CouponType) -> Bool {
+        guard let currentCoupon = self.coupon else { return false }
+        
+        if currentCoupon.type == coupon {
+            self.coupon = nil
+            return true
+        } else {
+            return false
+        }
     }
 
 }

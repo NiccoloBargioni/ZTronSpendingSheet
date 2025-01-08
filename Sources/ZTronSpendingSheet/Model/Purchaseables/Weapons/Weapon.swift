@@ -14,6 +14,8 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
     private let amountSemaphore = DispatchSemaphore(value: 1)
     
     
+    public var coupon: (any Coupon)? = nil
+    
     public let id: String
     
     public init(name: String, price: Double, description: String, assetsImageName: String, categories: Set<PurchaseableCategory>, availability: Int, amount: Int = 0) {
@@ -59,7 +61,11 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
     }
     
     public func getPrice() -> Double {
-        return self.price
+        if let coupon = self.coupon {
+            return self.price * (1 - coupon.getPriceOffPercentage())
+        } else {
+            return self.price
+        }
     }
     
     public func makeDeepCopy() -> Self {
@@ -140,5 +146,25 @@ public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
     
     public func getCompatibleCoupons() -> [CouponType] {
         return [.refundCoupon]
+    }
+    
+    public func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool {
+        if self.getCompatibleCoupons().contains(coupon.type) {
+            self.coupon = coupon
+            return true
+        } else {
+            return false
+        }
+    }
+
+    @discardableResult public func removeCoupon(_ coupon: CouponType) -> Bool {
+        guard let currentCoupon = self.coupon else { return false }
+        
+        if currentCoupon.type == coupon {
+            self.coupon = nil
+            return true
+        } else {
+            return false
+        }
     }
 }

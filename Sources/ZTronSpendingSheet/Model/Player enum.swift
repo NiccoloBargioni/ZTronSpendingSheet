@@ -1,4 +1,4 @@
-public enum Player: Hashable, Sendable {
+public enum Player: CaseIterable, Hashable, Sendable {
     case player1
     case player2
     case player3

@@ -9,8 +9,6 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     private let purchasesLock: DispatchSemaphore = .init(value: 1)
     private let validatorLock: DispatchSemaphore = .init(value: 1)
     
-    
-    
     public init(validationStrategy: any SpendingValidatorStrategy) {
         self.validationStrategy = validationStrategy
     }
@@ -276,6 +274,44 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return true
     }
     
+    @discardableResult public final func removeCouponFromAllPurchases(_ couponType: CouponType) -> Bool {
+        var removedItemsCount: Int = 0
+        
+        Player.allCases.forEach { player in
+            if let purchasesForThisPlayer = self.purchases[player] {
+                purchasesForThisPlayer.forEach { purchase in
+                    if purchase.removeCoupon(couponType) {
+                        removedItemsCount += 1
+                    }
+                }
+            }
+        }
+        
+        return removedItemsCount > 0
+    }
+    
+    @discardableResult public final func useCoupon(_ couponType: CouponType, purchaseID: String) -> Bool {
+        guard let thePurchase = self.findPurchaseById(purchaseID) else { return false }
+        guard let activeCoupon = self.coupon.first(where: { coupon in
+            return coupon.type == couponType
+        }) else { return false }
+        
+        activeCoupon.use()
+        return thePurchase.applyCouponIfCompatible(activeCoupon)
+    }
+    
+    @discardableResult public final func releaseCoupon(_ couponType: CouponType, purchaseID: String) -> Bool {
+        guard let thePurchase = self.findPurchaseById(purchaseID) else { return false }
+        guard let activeCoupon = self.coupon.first(where: { coupon in
+            return coupon.type == couponType
+        }) else { return false }
+        
+        activeCoupon.release()
+        let didRemoveCoupon = thePurchase.removeCoupon(activeCoupon.type)
+        self.objectWillChange.send()
+        return didRemoveCoupon
+    }
+    
     
     @discardableResult public final func changeConsumableRarity(consumable: CouponType, to rarity: Rarity) -> Bool {
         guard let theCoupon = self.coupon.first(where: { coupon in
@@ -286,6 +322,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         
         theCoupon.changeRarity(to: rarity)
         
+        self.objectWillChange.send()
         return true
     }
     

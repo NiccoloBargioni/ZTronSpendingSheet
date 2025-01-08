@@ -1,6 +1,8 @@
 import Foundation
 
-public final class WeaponPackAPunchCouponDecorator: WeaponPackAPunchDecorator {
+public final class WeaponPackAPunchCouponDecorator: WeaponPackAPunchDecorator, @unchecked Sendable {
+    public var coupon: (any Coupon)? = nil
+    
     let discountDecorator: any Discountable
     
     public let id: String
@@ -63,4 +65,9 @@ public final class WeaponPackAPunchCouponDecorator: WeaponPackAPunchDecorator {
     public func getCompatibleCoupons() -> [CouponType] {
         return self.decorated.getCompatibleCoupons()
     }
+    
+    @discardableResult public func removeCoupon(_ coupon: CouponType) -> Bool {
+        return self.decorated.removeCoupon(coupon)
+    }
+
 }

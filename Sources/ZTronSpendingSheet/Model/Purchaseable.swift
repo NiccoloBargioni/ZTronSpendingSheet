@@ -2,6 +2,7 @@ import Foundation
 
 public protocol Purchaseable: Identifiable, Sendable, Cloneable, Discountable {
     var id: String { get }
+    var coupon: (any Coupon)? { get }
     
     func getCategories() -> Set<PurchaseableCategory>
     func getAssetsImage() -> String
@@ -16,6 +17,8 @@ public protocol Purchaseable: Identifiable, Sendable, Cloneable, Discountable {
     func decreaseAmount() -> Void
     
     func getCompatibleCoupons() -> [CouponType]
+    @discardableResult func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool
+    @discardableResult func removeCoupon(_ coupon: CouponType) -> Bool
 }
 
 
@@ -23,4 +26,5 @@ public protocol Purchaseable: Identifiable, Sendable, Cloneable, Discountable {
 public extension Purchaseable {
     func decrementAvailability(amount: Int = 1) {  }
     func increaseAvailability(amount: Int = 1) {  }
+    @discardableResult func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool { return false }
 }

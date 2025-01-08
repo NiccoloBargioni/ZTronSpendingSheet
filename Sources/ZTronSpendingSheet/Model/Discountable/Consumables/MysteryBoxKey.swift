@@ -55,4 +55,18 @@ internal final class MysteryBoxKey: Coupon, @unchecked Sendable {
             return true
         }
     }
+    
+    internal func use() {
+        self.remainingActivationsLock.wait()
+        if self.remainingActivations > 0 {
+            self.remainingActivations -= 1
+        }
+        self.remainingActivationsLock.signal()
+    }
+    
+    internal func release() {
+        self.remainingActivationsLock.wait()
+        self.remainingActivations = max(self.remainingActivations + 1, Rarity.rarityPriority[self.rarity]! + 1)
+        self.remainingActivationsLock.signal()
+    }
 }

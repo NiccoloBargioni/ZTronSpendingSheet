@@ -276,6 +276,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return true
     }
     
+    
     @discardableResult public final func changeConsumableRarity(consumable: CouponType, to rarity: Rarity) -> Bool {
         guard let theCoupon = self.coupon.first(where: { coupon in
             coupon.type == consumable
@@ -294,5 +295,17 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         self.coupon.removeAll(where: { coupon in
             return coupon.type == theConsumableType
         })
+    }
+    
+    
+    public func canReplaceConsumableRarity(consumable: CouponType, switchingToRarity: Rarity) -> Bool {
+        guard let theCoupon = self.coupon.first(where: { coupon in
+            coupon.type == consumable
+        }) else {
+            return true
+        }
+        
+        // The number of times the coupon was activated is at least the same as the times the new coupon can be activated
+        return Rarity.rarityPriority[switchingToRarity]! <= theCoupon.activationsCount
     }
 }

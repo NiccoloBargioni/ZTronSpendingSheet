@@ -2,11 +2,12 @@ import Foundation
 
 internal final class BlitzMachineKey: Coupon, @unchecked Sendable {
     internal let type: CouponType = .blitzMachineCoupon
-    
+    private(set) internal var rarity: Rarity
+
     public var remainingActivations: Int
     
     private let remainingActivationsLock = DispatchSemaphore(value: 1)
-    private let rarity: Rarity
+    private let rarityLock = DispatchSemaphore(value: 1)
 
     internal init(rarity: Rarity) {
         self.rarity = rarity
@@ -31,20 +32,24 @@ internal final class BlitzMachineKey: Coupon, @unchecked Sendable {
         return 0.5
     }
     
-    func changeRarity(to newRarity: Rarity) {
+    @discardableResult func changeRarity(to newRarity: Rarity) -> Bool {
         self.remainingActivationsLock.wait()
         
-        switch rarity {
-            case .common:
-                self.remainingActivations = 1
-            case .rare:
-                self.remainingActivations = 2
-            case .legendary:
-                self.remainingActivations = 3
-            case .epic:
-                self.remainingActivations = 4
-            }
+        defer {
+            self.remainingActivationsLock.signal()
+        }
+        
+        let activations = self.activationsCount
+        self.remainingActivations = Rarity.rarityPriority[newRarity]! + 1 - self.activationsCount
 
-        self.remainingActivationsLock.signal()
+        if remainingActivations < 0 {
+            self.remainingActivations = activations
+            return false
+        } else {
+            self.rarityLock.wait()
+            self.rarity = newRarity
+            self.rarityLock.signal()
+            return true
+        }
     }
 }

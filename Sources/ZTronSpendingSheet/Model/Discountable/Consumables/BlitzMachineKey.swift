@@ -8,6 +8,8 @@ internal final class BlitzMachineKey: Coupon, @unchecked Sendable {
     
     private let remainingActivationsLock = DispatchSemaphore(value: 1)
     private let rarityLock = DispatchSemaphore(value: 1)
+    
+    public let id: String
 
     internal init(rarity: Rarity) {
         self.rarity = rarity
@@ -22,6 +24,8 @@ internal final class BlitzMachineKey: Coupon, @unchecked Sendable {
             case .epic:
                 self.remainingActivations = 4
             }
+        
+        self.id = self.type.rawValue
     }
     
     internal func makeDeepCopy() -> Self {

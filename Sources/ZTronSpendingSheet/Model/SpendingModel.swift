@@ -1,7 +1,7 @@
 import Foundation
 
 public final class SpendingModel: @unchecked Sendable, ObservableObject {
-    @Published private var coupon: [any Coupon] = []
+    @Published private var coupon: [Player: [any Coupon]] = [:]
     
     @Published private var purchases: [Player: [any Purchaseable]] = [:]
     private var validationStrategy: any SpendingValidatorStrategy
@@ -260,13 +260,18 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         }
     }
     
-    @discardableResult public final func addConsumable(_ theConsumableType: CouponType, rarity: Rarity = .common) -> Bool {
-        guard self.coupon.count < 2 else { return false }
+    @discardableResult public final func addConsumable(_ theConsumableType: CouponType, rarity: Rarity = .common, player: Player) -> Bool {
+        guard let couponsForPlyer = self.coupon[player] else { return false }
+        guard couponsForPlyer.count < 2 else { return false }
         
-        if !self.coupon.contains(where: { theCoupon in
+        if couponsForPlyer.contains(where: { theCoupon in
             return theCoupon.type == theConsumableType
         }) {
-            self.coupon.append(makeCouponForType(theConsumableType, withRarity: rarity))
+            if self.coupon[player] == nil {
+                self.coupon[player] = []
+            }
+            
+            self.coupon[player]?.append(makeCouponForType(theConsumableType, withRarity: rarity))
         } else {
             return false
         }
@@ -290,9 +295,10 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return removedItemsCount > 0
     }
     
-    @discardableResult public final func useCoupon(_ couponType: CouponType, purchaseID: String) -> Bool {
+    @discardableResult public final func useCoupon(_ couponType: CouponType, purchaseID: String, for player: Player) -> Bool {
         guard let thePurchase = self.findPurchaseById(purchaseID) else { return false }
-        guard let activeCoupon = self.coupon.first(where: { coupon in
+        guard let activeCouponsForPlayer = self.coupon[player] else { return false }
+        guard let activeCoupon = activeCouponsForPlayer.first(where: { coupon in
             return coupon.type == couponType
         }) else { return false }
         
@@ -300,9 +306,10 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return thePurchase.applyCouponIfCompatible(activeCoupon)
     }
     
-    @discardableResult public final func releaseCoupon(_ couponType: CouponType, purchaseID: String) -> Bool {
+    @discardableResult public final func releaseCoupon(_ couponType: CouponType, purchaseID: String, for player: Player) -> Bool {
         guard let thePurchase = self.findPurchaseById(purchaseID) else { return false }
-        guard let activeCoupon = self.coupon.first(where: { coupon in
+        guard let activeCouponsForPlayer = self.coupon[player] else { return false }
+        guard let activeCoupon = activeCouponsForPlayer.first(where: { coupon in
             return coupon.type == couponType
         }) else { return false }
         
@@ -313,8 +320,9 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     
-    @discardableResult public final func changeConsumableRarity(consumable: CouponType, to rarity: Rarity) -> Bool {
-        guard let theCoupon = self.coupon.first(where: { coupon in
+    @discardableResult public final func changeConsumableRarity(consumable: CouponType, to rarity: Rarity, for player: Player) -> Bool {
+        guard let couponsForPlayer = self.coupon[player] else { return false }
+        guard let theCoupon = couponsForPlayer.first(where: { coupon in
             coupon.type == consumable
         }) else {
             return false
@@ -328,15 +336,17 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     
     
     // TODO: Release all usages
-    public func removeConsumable(_ theConsumableType: CouponType) {
-        self.coupon.removeAll(where: { coupon in
-            return coupon.type == theConsumableType
-        })
+    public func removeConsumable(_ theConsumableType: CouponType, for player: Player) {
+        if let couponsForPlayer = self.coupon[player] {
+            self.coupon[player]?.removeAll(where: { coupon in
+                return coupon.type == theConsumableType
+            })
+        }
     }
     
     
-    public func canReplaceConsumableRarity(consumable: CouponType, switchingToRarity: Rarity) -> Bool {
-        guard let theCoupon = self.coupon.first(where: { coupon in
+    public func canReplaceConsumableRarity(consumable: CouponType, switchingToRarity: Rarity, for player: Player) -> Bool {
+        guard let theCoupon = self.coupon[player]?.first(where: { coupon in
             coupon.type == consumable
         }) else {
             return true

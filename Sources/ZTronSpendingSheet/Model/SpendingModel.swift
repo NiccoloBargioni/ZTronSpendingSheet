@@ -355,4 +355,11 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         // The number of times the coupon was activated is at least the same as the times the new coupon can be activated
         return theCoupon.activationsCount <= Rarity.rarityPriority[switchingToRarity]!
     }
+    
+    
+    public func getActiveConsumablesByPlayer(_ player: Player) -> [any Coupon]? {
+        return self.coupon[player]?.map { someCoupon in
+            return someCoupon.makeDeepCopy()
+        }
+    }
 }

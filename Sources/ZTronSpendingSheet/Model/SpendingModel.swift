@@ -261,19 +261,18 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     @discardableResult public final func addConsumable(_ theConsumableType: CouponType, rarity: Rarity = .common, player: Player) -> Bool {
-        guard let couponsForPlyer = self.coupon[player] else { return false }
-        guard couponsForPlyer.count < 2 else { return false }
-        
-        if couponsForPlyer.contains(where: { theCoupon in
-            return theCoupon.type == theConsumableType
-        }) {
-            if self.coupon[player] == nil {
-                self.coupon[player] = []
-            }
+        if let couponsForPlyer = self.coupon[player] {
+            // Zero or more active coupons but already init
+            guard couponsForPlyer.count < 2 else { return false }
             
-            self.coupon[player]?.append(makeCouponForType(theConsumableType, withRarity: rarity))
+            if !couponsForPlyer.contains(where: { theCoupon in
+                return theCoupon.type == theConsumableType
+            }) {
+                self.coupon[player]?.append(makeCouponForType(theConsumableType, withRarity: rarity))
+            }
         } else {
-            return false
+            // First time adding something to this player
+            self.coupon[player] = [makeCouponForType(theConsumableType, withRarity: rarity)]
         }
         
         return true

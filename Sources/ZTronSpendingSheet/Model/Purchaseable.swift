@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol Purchaseable: Identifiable, Sendable, Cloneable, Discountable {
+public protocol Purchaseable: Identifiable, Sendable, Cloneable, Discountable, ObservableObject {
     var id: String { get }
     var coupon: (any Coupon)? { get }
     

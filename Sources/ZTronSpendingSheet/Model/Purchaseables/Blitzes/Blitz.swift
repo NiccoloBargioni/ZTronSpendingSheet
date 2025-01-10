@@ -1,13 +1,12 @@
 import Foundation
 
-public final class Blitz: Purchaseable, @unchecked Sendable {
+public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
     private let name: String
     private let price: Double
     private let description: String
     private let assetsImageName: String
-    private var amount: Int
+    @Published private var amount: Int
     private var categories: Set<PurchaseableCategory>
-    
     private let categoriesSemaphore = DispatchSemaphore(value: 1)
     private let amountSemaphore = DispatchSemaphore(value: 1)
     

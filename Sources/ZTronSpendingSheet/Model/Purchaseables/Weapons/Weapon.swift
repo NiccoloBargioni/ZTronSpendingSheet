@@ -1,11 +1,11 @@
 import Foundation
 
-public final class Weapon: PurchaseableWeaponDecorator, @unchecked Sendable {
+public final class Weapon: PurchaseableWeaponDecorator, ObservableObject, @unchecked Sendable {
     private let name: String
     private let price: Double
     private let description: String
     private let assetsImageName: String
-    private var amount: Int
+    @Published private var amount: Int
     private var categories: Set<PurchaseableCategory>
     private var availability: Int
     

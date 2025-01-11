@@ -80,7 +80,10 @@ public final class Weapon: PurchaseableWeaponDecorator, ObservableObject, @unche
             self.categoriesSemaphore.signal()
         }
         
-        return Self(name: self.name, price: self.price, description: self.description, assetsImageName: self.assetsImageName, categories: self.categories, availability: self.availability, amount: self.amount)
+        let deepCopy = Self(name: self.name, price: self.price, description: self.description, assetsImageName: self.assetsImageName, categories: self.categories, availability: self.availability, amount: self.amount)
+        deepCopy.coupon = self.coupon?.makeDeepCopy()
+        
+        return deepCopy
     }
     
     public func getAvailability() -> Int {

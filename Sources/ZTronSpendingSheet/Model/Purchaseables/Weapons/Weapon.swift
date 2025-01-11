@@ -151,6 +151,7 @@ public final class Weapon: PurchaseableWeaponDecorator, ObservableObject, @unche
     public func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool {
         if self.getCompatibleCoupons().contains(coupon.type) {
             self.coupon = coupon
+            coupon.use()
             return true
         } else {
             return false
@@ -161,6 +162,7 @@ public final class Weapon: PurchaseableWeaponDecorator, ObservableObject, @unche
         guard let currentCoupon = self.coupon else { return false }
         
         if currentCoupon.type == coupon {
+            self.coupon?.release()
             self.coupon = nil
             return true
         } else {

@@ -337,9 +337,19 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     // TODO: Release all usages
     public func removeConsumable(_ theConsumableType: CouponType, for player: Player) {
         if let couponsForPlayer = self.coupon[player] {
-            self.coupon[player]?.removeAll(where: { coupon in
-                return coupon.type == theConsumableType
-            })
+            if let releasedCount = self.purchases[player]?.count(where: { purchase in
+                return purchase.coupon?.type == theConsumableType
+            }) {
+                couponsForPlayer.forEach { coupon in
+                    if coupon.type == theConsumableType {
+                        coupon.release()
+                    }
+                }
+            }
+        }
+        
+        self.coupon[player]?.removeAll { coupon in
+            return coupon.type == theConsumableType
         }
     }
     

@@ -29,9 +29,12 @@ internal final class BlitzMachineKey: Coupon, @unchecked Sendable {
     }
     
     internal func makeDeepCopy() -> Self {
-        var copy = Self.init(rarity: self.rarity)
-        for i in 0..<self.activationsCount {
-            copy.use()
+        let copy = Self.init(rarity: self.rarity)
+        
+        if self.activationsCount > 0 {
+            for _ in 0..<self.activationsCount {
+                copy.use()
+            }
         }
         
         return copy

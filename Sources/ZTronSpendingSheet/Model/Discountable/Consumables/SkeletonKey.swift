@@ -31,10 +31,12 @@ internal final class SkeletonKey: Coupon, @unchecked Sendable {
     
     internal func makeDeepCopy() -> Self {
         let copy = Self.init(rarity: self.rarity)
-        for _ in 0..<self.activationsCount {
-            copy.use()
+        if self.activationsCount > 0 {
+            for _ in 0..<self.activationsCount {
+                copy.use()
+            }
         }
-        
+
         return copy
     }
     

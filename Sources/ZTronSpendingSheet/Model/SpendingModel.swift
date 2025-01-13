@@ -269,6 +269,8 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
                 return theCoupon.type == theConsumableType
             }) {
                 self.coupon[player]?.append(makeCouponForType(theConsumableType, withRarity: rarity))
+            } else {
+                self.removeConsumableFromAllPurchasesForPlayer(theConsumableType, player: player)
             }
         } else {
             // First time adding something to this player
@@ -276,6 +278,26 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         }
         
         return true
+    }
+    
+    @discardableResult private final func removeConsumableFromAllPurchasesForPlayer(_ consumableType: CouponType, player: Player) -> Bool {
+        if let couponsForPlyer = self.coupon[player] {
+            // Zero or more active coupons but already init
+            guard couponsForPlyer.count > 0 else { return false }
+            
+            if let theCouponToRemove = couponsForPlyer.first(where: { theCoupon in
+                return theCoupon.type == consumableType
+            })  {
+                self.purchases[player]?.forEach { purchase in
+                    purchase.removeCoupon(consumableType)
+                    theCouponToRemove.release()
+                }
+            }
+            
+            return true
+        } else {
+            return false
+        }
     }
     
     @discardableResult public final func removeCouponFromAllPurchases(_ couponType: CouponType) -> Bool {

@@ -172,4 +172,5 @@ public final class Weapon: PurchaseableWeaponDecorator, ObservableObject, @unche
             return false
         }
     }
+    
 }

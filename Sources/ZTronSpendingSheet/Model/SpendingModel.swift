@@ -301,8 +301,12 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
             return coupon.type == couponType
         }) else { return false }
         
+        guard activeCoupon.remainingActivations > 0 else { return false }
+        
         activeCoupon.use()
-        return thePurchase.applyCouponIfCompatible(activeCoupon)
+        let couponActivationSuccessful = thePurchase.applyCouponIfCompatible(activeCoupon)
+        self.objectWillChange.send()
+        return couponActivationSuccessful
     }
     
     @discardableResult public final func releaseCoupon(_ couponType: CouponType, purchaseID: String, for player: Player) -> Bool {
@@ -314,6 +318,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         
         activeCoupon.release()
         let didRemoveCoupon = thePurchase.removeCoupon(activeCoupon.type)
+        
         self.objectWillChange.send()
         return didRemoveCoupon
     }

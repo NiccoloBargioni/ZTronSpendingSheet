@@ -404,4 +404,13 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
             return activeCoupon.type == consumable
         } != nil
     }
+    
+    public func getRemainingActivations(consumable: CouponType, player: Player) -> Int {
+        guard let couponsForPlayer = self.coupon[player] else { return 0 }
+        guard let theConsumable = couponsForPlayer.first(where: { activeCoupon in
+            return activeCoupon.type == consumable
+        }) else { return 0 }
+
+        return theConsumable.remainingActivations
+    }
 }

@@ -271,6 +271,9 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
                 self.coupon[player]?.append(makeCouponForType(theConsumableType, withRarity: rarity))
             } else {
                 self.removeConsumableFromAllPurchasesForPlayer(theConsumableType, player: player)
+                self.coupon[player]?.removeAll { coupon in
+                    return coupon.type == theConsumableType
+                }
             }
         } else {
             // First time adding something to this player

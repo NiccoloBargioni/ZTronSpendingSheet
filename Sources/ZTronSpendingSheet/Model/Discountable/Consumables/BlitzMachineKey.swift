@@ -29,7 +29,12 @@ internal final class BlitzMachineKey: Coupon, @unchecked Sendable {
     }
     
     internal func makeDeepCopy() -> Self {
-        return .init(rarity: self.rarity)
+        var copy = Self.init(rarity: self.rarity)
+        for i in 0..<self.activationsCount {
+            copy.use()
+        }
+        
+        return copy
     }
     
     internal func getPriceOffPercentage() -> Double {

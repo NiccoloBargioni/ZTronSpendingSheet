@@ -325,7 +325,6 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         
         guard activeCoupon.remainingActivations > 0 else { return false }
         
-        activeCoupon.use()
         let couponActivationSuccessful = thePurchase.applyCouponIfCompatible(activeCoupon)
         self.objectWillChange.send()
         return couponActivationSuccessful
@@ -338,7 +337,6 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
             return coupon.type == couponType
         }) else { return false }
         
-        activeCoupon.release()
         let didRemoveCoupon = thePurchase.removeCoupon(activeCoupon.type)
         
         self.objectWillChange.send()

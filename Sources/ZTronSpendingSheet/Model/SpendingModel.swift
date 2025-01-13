@@ -391,7 +391,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         }
         
         // The number of times the coupon was activated is at least the same as the times the new coupon can be activated
-        return theCoupon.activationsCount <= Rarity.rarityPriority[switchingToRarity]!
+        return theCoupon.activationsCount <= Rarity.rarityPriority[switchingToRarity]! + 1
     }
     
     

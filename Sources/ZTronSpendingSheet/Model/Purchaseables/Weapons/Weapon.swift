@@ -144,7 +144,6 @@ public final class Weapon: PurchaseableWeaponDecorator, ObservableObject, @unche
         self.amount += 1
         
         self.amountSemaphore.signal()
-
     }
     
     public func getCompatibleCoupons() -> [CouponType] {

@@ -111,6 +111,7 @@ public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
     public func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool {
         if self.getCompatibleCoupons().contains(coupon.type) {
             self.coupon = coupon
+            coupon.use()
             return true
         } else {
             return false

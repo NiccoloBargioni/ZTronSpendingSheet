@@ -359,6 +359,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     
+    /*
     // TODO: Release all usages
     public func removeConsumable(_ theConsumableType: CouponType, for player: Player) {
         if let couponsForPlayer = self.coupon[player] {
@@ -377,7 +378,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
             return coupon.type == theConsumableType
         }
     }
-    
+    */
     
     public func canReplaceConsumableRarity(consumable: CouponType, switchingToRarity: Rarity, for player: Player) -> Bool {
         guard let theCoupon = self.coupon[player]?.first(where: { coupon in
@@ -395,5 +396,12 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return self.coupon[player]?.map { someCoupon in
             return someCoupon.makeDeepCopy()
         }
+    }
+    
+    public func isConsumableActiveForPlayer(_ consumable: CouponType, player: Player) -> Bool {
+        guard let couponsForPlayer = self.coupon[player] else { return false }
+        return couponsForPlayer.first { activeCoupon in
+            return activeCoupon.type == consumable
+        } != nil
     }
 }

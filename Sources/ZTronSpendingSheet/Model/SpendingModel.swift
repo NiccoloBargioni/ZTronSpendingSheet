@@ -416,4 +416,13 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
 
         return theConsumable.remainingActivations
     }
+    
+    
+    public func getTotalSpent(for player: Player) -> Double? {
+        guard let purchasesForPlayer = self.purchases[player] else { return nil }
+        
+        return purchasesForPlayer.reduce(0.0) { partialResult, nextPurchase in
+            return partialResult + nextPurchase.getPrice()
+        }
+    }
 }

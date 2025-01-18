@@ -361,28 +361,6 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return true
     }
     
-    
-    /*
-    // TODO: Release all usages
-    public func removeConsumable(_ theConsumableType: CouponType, for player: Player) {
-        if let couponsForPlayer = self.coupon[player] {
-            if let releasedCount = self.purchases[player]?.count(where: { purchase in
-                return purchase.coupon?.type == theConsumableType
-            }) {
-                couponsForPlayer.forEach { coupon in
-                    if coupon.type == theConsumableType {
-                        coupon.release()
-                    }
-                }
-            }
-        }
-        
-        self.coupon[player]?.removeAll { coupon in
-            return coupon.type == theConsumableType
-        }
-    }
-    */
-    
     public func canReplaceConsumableRarity(consumable: CouponType, switchingToRarity: Rarity, for player: Player) -> Bool {
         guard let theCoupon = self.coupon[player]?.first(where: { coupon in
             coupon.type == consumable

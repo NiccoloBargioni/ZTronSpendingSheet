@@ -425,4 +425,13 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
             return partialResult + nextPurchase.getPrice()
         }
     }
+    
+    public func getCurrentActivations(of consumable: CouponType, for player: Player) -> Int? {
+        guard let couponsForPlayer = self.coupon[player] else { return nil }
+        guard let requestedCoupon = couponsForPlayer.first(where: { coupon in
+            return coupon.type == consumable
+        }) else { return nil }
+        
+        return requestedCoupon.activationsCount
+    }
 }

@@ -262,13 +262,14 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     
     @discardableResult public final func addConsumable(_ theConsumableType: CouponType, rarity: Rarity = .common, player: Player) -> Bool {
         if let couponsForPlyer = self.coupon[player] {
-            // Zero or more active coupons but already init
-            guard couponsForPlyer.count < 2 else { return false }
+
             
             if !couponsForPlyer.contains(where: { theCoupon in
                 return theCoupon.type == theConsumableType
             }) {
-                self.coupon[player]?.append(makeCouponForType(theConsumableType, withRarity: rarity))
+                if couponsForPlyer.count < 2 {
+                    self.coupon[player]?.append(makeCouponForType(theConsumableType, withRarity: rarity))
+                }
             } else {
                 self.removeConsumableFromAllPurchasesForPlayer(theConsumableType, player: player)
                 self.coupon[player]?.removeAll { coupon in
@@ -438,7 +439,6 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
             }
             
         }
-        
     }
     
     public func mapPlayerToNumber(_ player: Player) -> Int {

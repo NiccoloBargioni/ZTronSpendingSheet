@@ -412,4 +412,51 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         
         return requestedCoupon.activationsCount
     }
+    
+    
+    public func changeNumberOfPlayer(to nextPlayerCount: Int) {
+        assert(nextPlayerCount >= 2 && nextPlayerCount <= 4)
+        
+        for player in Player.allCases {
+            if mapPlayerToNumber(player) > nextPlayerCount {
+                if let activeCouponsForRemovedPlayer = self.coupon[player] {
+                    activeCouponsForRemovedPlayer.forEach { couponToRemove in
+                        self.removeConsumableFromAllPurchasesForPlayer(couponToRemove.type, player: player)
+                    }
+                }
+                
+                self.coupon[player]?.removeAll()
+                
+                if let purchases = self.purchases[player] {
+                    purchases.forEach { thePurchaseToRemove in
+                        self.removePurchaseById(thePurchaseToRemove.id, for: player)
+                    }
+                }
+                
+                self.purchases[player] = nil
+                self.coupon[player] = nil
+            }
+            
+        }
+        
+    }
+    
+    public func mapPlayerToNumber(_ player: Player) -> Int {
+        switch player {
+        case .player1:
+            return 1
+        case .player2:
+            return 2
+        case .player3:
+            return 3
+        case .player4:
+            return 4
+        @unknown default:
+            guard let playerNumber = player.rawValue.last(where: { letter in
+                return letter.isNumber
+            }) else { return 0 }
+            
+            return Int("\(playerNumber)") ?? 0
+        }
+    }
 }

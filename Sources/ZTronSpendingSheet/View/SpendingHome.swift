@@ -26,6 +26,10 @@ public struct SpendingHome: View {
     
     @StateObject private var spendingModel = SpendingModel(validationStrategy: TwoPlayersValidatorStrategy())
     
+    private var currentPlayerName: String {
+        return "wwii.side.quests.spending.common.\(self.currentPlayerForCart.rawValue.lowercased())".fromLocalized()
+    }
+    
     public init() {
         let appearance = UINavigationBarAppearance()
             appearance.shadowColor = .clear
@@ -164,8 +168,8 @@ public struct SpendingHome: View {
                 AlertToast(
                     displayMode: .alert,
                     type: .complete(SwiftUI.Color.green),
-                    title: "\("wwii.side.quests.spending.home.shop.toast.title".fromLocalized()) \(self.lastPurchase?.getName() ?? "(nil)")",
-                    subTitle: "\("wwii.side.quests.spending.home.shop.toast.subheadline".fromLocalized()) **\(self.currentPlayerForCart.rawValue)**"
+                    title: "\("wwii.side.quests.spending.home.shop.toast.title".fromLocalized()) \(self.lastPurchase?.getName().fromLocalized() ?? "(nil)")",
+                    subTitle: "\("wwii.side.quests.spending.home.shop.toast.subheadline".fromLocalized()) **\(self.currentPlayerName)**"
                 )
             }
             .clipped()

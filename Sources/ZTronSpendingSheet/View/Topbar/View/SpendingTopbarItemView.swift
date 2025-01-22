@@ -24,7 +24,7 @@ internal struct SpendingTopbarItemView: View {
         if #unavailable(iOS 16.0) {
             VStack {
                 TopbarItemShopWindow(icon: tool.getIcon(), isActive: isActive)
-                    .glowColor(Color(self.tool.getRarity().rawValue))
+                    .glowColor(Color(self.tool.getRarity().rawValue, bundle: .module))
               Text(tool.getName().fromLocalized())
               .fontWeight(
                 isActive ? .bold : .regular
@@ -49,7 +49,7 @@ internal struct SpendingTopbarItemView: View {
             // MARK: - iOS 16.0+
             VStack {
                 TopbarItemShopWindow(icon: tool.getIcon(), isActive: isActive)
-                    .glowColor(Color(self.tool.getRarity().rawValue))
+                    .glowColor(Color(self.tool.getRarity().rawValue, bundle: .module))
               Text(tool.getName().fromLocalized())
               .fontWeight(
                 isActive ? .bold : .regular

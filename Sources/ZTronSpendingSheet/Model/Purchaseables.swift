@@ -1,9 +1,9 @@
-public let spendingPurchaseables: [any Purchaseable] = [
+internal let spendingPurchaseables: [any Purchaseable] = [
     Weapon(
         name: "wwii.side.quests.spending.weapon.m1928",
         price: 750.0,
         description: "wwii.side.quests.spending.weapon.m1928.caption",
-        assetsImageName: "wwii.side.quests.spending.weapon.M1928",
+        assetsImageName: "wwii.side.quests.spending.weapon.m1928",
         categories: [.smg, .weapon],
         availability: Int.max/2
     ),
@@ -141,6 +141,16 @@ public let spendingPurchaseables: [any Purchaseable] = [
         price: 750.0,
         description: "wwii.side.quests.spending.weapon.combat.shotgun.caption",
         assetsImageName: "wwii.side.quests.spending.weapon.combat.shotgun",
+        categories: [.weapon, .shotgun],
+        availability: Int.max/2
+    ),
+
+    
+    Weapon(
+        name: "wwii.side.quests.spending.weapon.sawed.off",
+        price: 750.0,
+        description: "wwii.side.quests.spending.weapon.sawed.off.caption",
+        assetsImageName: "wwii.side.quests.spending.weapon.sawed.off",
         categories: [.weapon, .shotgun],
         availability: Int.max/2
     ),

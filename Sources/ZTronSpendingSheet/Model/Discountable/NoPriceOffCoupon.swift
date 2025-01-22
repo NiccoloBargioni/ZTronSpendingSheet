@@ -1,11 +1,11 @@
 import Foundation
 
 
-public final class NoPriceOffCoupon: Discountable {
+internal final class NoPriceOffCoupon: Discountable {
     
-    public init() {  }
+    internal init() {  }
     
-    public func makeDeepCopy() -> Self {
+    internal func makeDeepCopy() -> Self {
         return .init()
     }    
 }

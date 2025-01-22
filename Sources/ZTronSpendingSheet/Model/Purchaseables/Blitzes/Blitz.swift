@@ -1,6 +1,6 @@
 import Foundation
 
-public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
+internal final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
     private let name: String
     private let price: Double
     private let description: String
@@ -10,10 +10,10 @@ public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
     private let categoriesSemaphore = DispatchSemaphore(value: 1)
     private let amountSemaphore = DispatchSemaphore(value: 1)
     
-    public let id: String
-    public var coupon: (any Coupon)? = nil 
+    internal let id: String
+    internal var coupon: (any Coupon)? = nil 
     
-    public init(name: String, price: Double, description: String, assetsImageName: String, amount: Int = 0) {
+    internal init(name: String, price: Double, description: String, assetsImageName: String, amount: Int = 0) {
         self.name = name
         self.price = price
         self.id = name
@@ -25,19 +25,19 @@ public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
         categories.insert(.perks)
     }
     
-    public func getName() -> String {
+    internal func getName() -> String {
         return self.name
     }
     
-    public func getDescription() -> String {
+    internal func getDescription() -> String {
         return self.description
     }
     
-    public func getAssetsImage() -> String {
+    internal func getAssetsImage() -> String {
         return self.assetsImageName
     }
     
-    public func getCategories() -> Set<PurchaseableCategory> {
+    internal func getCategories() -> Set<PurchaseableCategory> {
         self.categoriesSemaphore.wait()
         
         defer {
@@ -52,7 +52,7 @@ public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
         return copy
     }
     
-    public func getPrice() -> Double {
+    internal func getPrice() -> Double {
         if let coupon = self.coupon {
             return self.price * (1 - coupon.getPriceOffPercentage())
         } else {
@@ -60,7 +60,7 @@ public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
         }
     }
     
-    public func makeDeepCopy() -> Self {
+    internal func makeDeepCopy() -> Self {
         // Constructor makes a defensive copy of categories anyway
         self.categoriesSemaphore.wait()
         self.amountSemaphore.wait()
@@ -73,11 +73,11 @@ public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
         return Self(name: self.name, price: self.price, description: self.description, assetsImageName: self.assetsImageName, amount: self.amount)
     }
     
-    public func getAvailability() -> Int {
+    internal func getAvailability() -> Int {
         return Int.max / 2
     }
     
-    public func getAmount() -> Int {
+    internal func getAmount() -> Int {
         self.amountSemaphore.wait()
         
         defer {
@@ -87,7 +87,7 @@ public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
         return self.amount
     }
     
-    public func decreaseAmount() {
+    internal func decreaseAmount() {
         self.amountSemaphore.wait()
         
         self.amount = max(0, self.amount - 1)
@@ -95,7 +95,7 @@ public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
         self.amountSemaphore.signal()
     }
     
-    public func increaseAmount() {
+    internal func increaseAmount() {
         self.amountSemaphore.wait()
         
         self.amount += 1
@@ -104,11 +104,11 @@ public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
 
     }
     
-    public func getCompatibleCoupons() -> [CouponType] {
+    internal func getCompatibleCoupons() -> [CouponType] {
         return [.refundCoupon, .blitzMachineCoupon]
     }
 
-    public func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool {
+    internal func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool {
         if self.getCompatibleCoupons().contains(coupon.type) {
             self.coupon = coupon
             coupon.use()
@@ -118,7 +118,7 @@ public final class Blitz: Purchaseable, ObservableObject, @unchecked Sendable {
         }
     }
     
-    @discardableResult public func removeCoupon(_ coupon: CouponType) -> Bool {
+    @discardableResult internal func removeCoupon(_ coupon: CouponType) -> Bool {
         guard let currentCoupon = self.coupon else { return false }
         
         if currentCoupon.type == coupon {

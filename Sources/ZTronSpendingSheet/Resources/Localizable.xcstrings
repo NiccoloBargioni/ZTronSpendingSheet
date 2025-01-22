@@ -1,0 +1,1254 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "%.1f ⚡" : {
+
+    },
+    "%.2f ⚡" : {
+
+    },
+    "%@" : {
+
+    },
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "%@ ⚡" : {
+
+    },
+    "%lld" : {
+
+    },
+    "%lld Players Spending sheet" : {
+
+    },
+    "Which player do you want to visit the cart for" : {
+
+    },
+    "wwii.side.quests.spending.category.%@" : {
+
+    },
+    "wwii.side.quests.spending.category.ar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assault Rifles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fucili d'assalto"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.category.door" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gates"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porte"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.category.mandatory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mandatory"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obbligatori"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.category.misc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Miscellaneous"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vario"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.category.perks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blitzes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perk"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.category.pistol" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pistols"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pistole"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.category.shotgun" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shotguns"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fucili a pompa"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.category.smg" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SMG"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mitragliette"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.category.sniper" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snipers"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cecchini"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.category.weapon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weapons"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Armi"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.common.player1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player 1"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giocatore 1"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.common.player2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player 2"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giocatore 2"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.common.player3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player 3"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giocatore 3"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.common.player4" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player 4"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giocatore 4"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.coupon.blitz.machine.key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blitz Machine Key"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiave Macchina Blitz"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.coupon.mystery.box.key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mystery Box Key"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiave Cassa Misteriosa"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.coupon.refund.coupon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refund Coupon"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coupon Rimborso"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.coupon.skeleton.key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skeleton Key"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiave Scheletrica"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.coupons.topbar.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick up to two different consumables"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli fino a due consumabili"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.artillery.bunker" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artillery Bunker"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bunker Artiglieria"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.artillery.bunker.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.gate.artillery.bunker.double.tap.side" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artillery Bunker (Double Tap Side)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bunker Artiglieria (lato Fuoco Rapido)"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.artillery.bunker.double.tap.side.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.gate.artillery.bunker.electric.cherry.side" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artillery Bunker (Electric Cherry Side)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bunker Artiglieria (lato Electric Cherry)"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.artillery.bunker.electric.cherry.side.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.gate.artillery.bunker.melee.side" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artillery Bunker (Melee Side)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bunker Artiglieria (lato corpo a corpo)"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.artillery.bunker.melee.side.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.gate.artillery.bunker.mystery.box.side" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artillery Bunker (Mystery Box Side)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bunker Artiglieria (lato cassa)"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.artillery.bunker.mystery.box.side.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.gate.beach.passage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beach Passage"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passaggio spiaggia"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.beach.passage.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.gate.bluffs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluffs"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scogliere"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.bluffs.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.gate.bunker.1.staminup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bunker 1"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bunker 1"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.bunker.1.staminup.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.gate.overlook" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlook"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panoramica"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.overlook.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.gate.u.boat.pens" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "U-BOAT Pens"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base degli U-BOAT"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.gate.u.boat.pens.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.home.cart.empty.cart.label" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "hasn’t purchased anything yet"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "non ha ancora aggiunto niente al carrello."
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.home.cart.total.label" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TOTAL:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TOTALE:"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.home.shop.add.to.cart.label" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ADD TO CART"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AGGIUNGI AL CARRELLO"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.home.shop.toast.subheadline" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added purchase to cart for"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiunto acquisto al carrello per il"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.home.shop.toast.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiunto"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.misc.flak.guns" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flak Guns"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cannoni"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.misc.flak.guns.captions" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.misc.geistschild" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geistschild"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geistschild"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.misc.geistschild.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.misc.mine.carts.ride" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mine Carts Ride"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giro carrelli miniera "
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.misc.mine.carts.ride.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.misc.pack.a.punch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pack-a-punch (Überschnalle)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pack-a-punch (Überschnalle)"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.misc.pack.a.punch.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.misc.ripsaw.table" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripsaw Table"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tavolo Motosega"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.misc.ripsaw.table.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.misc.ripsaw.upgrade" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripsaw Upgrade"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potenziamento Motosega"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.misc.ripsaw.upgrade.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.perk.faustblitz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faustblitz"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faustblitz"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.perk.faustblitz.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.perk.kugelblitz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kugelblitz"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kugelblitz"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.perk.kugelblitz.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.perk.laufenblitz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laufenblitz"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laufenblitz"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.perk.laufenblitz.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.perk.lebenblitz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lebenblitz"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lebenblitz"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.perk.lebenblitz.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.perk.random.blitz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Random Blitz"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blitz casuale"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.perk.random.blitz.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.perk.schildblitz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schildblitz"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schildblitz"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.perk.schildblitz.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.perk.schnellblitz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schnellblitz"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schnellblitz"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.perk.schnellblitz.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.bar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BAR"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BAR"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.bar.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.combat.shotgun" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Combat Shotgun"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fucile da battaglia"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.combat.shotgun.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.fg42" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FG-42"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FG-42"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.fg42.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.grease.gun" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grease Gun"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grease Gun"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.grease.gun.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.lee.enfield" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lee Enfield"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lee Enfield"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.lee.enfield.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.m1.garand" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M1 Garand"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M1 Garand"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.m1.garand.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.m1a1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M1A1"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M1A1"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.m1a1.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.m1928" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M1928"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M1928"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.m1928.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.m1941" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M1941"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M1941"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.m1941.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.machine.pistol" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Machine Pistol"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Machine Pistol"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.machine.pistol.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.mp40" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MP-40"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MP-40"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.mp40.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.ppsh" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PPSH"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PPSH"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.ppsh.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.sawed.off" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sawed Off"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sawed Off"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.sawed.off.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.stg.44" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STG-44"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STG-44"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.stg.44.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.svt.40" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SVT-40"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SVT-40"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.svt.40.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.type100" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type 100"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type 100"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.type100.caption" : {
+      "extractionState" : "manual"
+    },
+    "wwii.side.quests.spending.weapon.waffe29" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waffe 29"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waffe 29"
+          }
+        }
+      }
+    },
+    "wwii.side.quests.spending.weapon.waffe29.caption" : {
+      "extractionState" : "manual"
+    },
+    "x %lld" : {
+
+    }
+  },
+  "version" : "1.0"
+}

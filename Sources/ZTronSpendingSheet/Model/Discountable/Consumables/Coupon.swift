@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol Coupon: Discountable {
+internal protocol Coupon: Discountable {
     var type: CouponType { get }
     var rarity: Rarity { get }
     var remainingActivations: Int { get set }

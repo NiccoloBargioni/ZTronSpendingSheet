@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol Purchaseable: Identifiable, Sendable, Cloneable, Discountable, ObservableObject {
+internal protocol Purchaseable: Identifiable, Sendable, Cloneable, Discountable, ObservableObject {
     var id: String { get }
     var coupon: (any Coupon)? { get }
     
@@ -23,7 +23,7 @@ public protocol Purchaseable: Identifiable, Sendable, Cloneable, Discountable, O
 
 
 
-public extension Purchaseable {
+internal extension Purchaseable {
     func decrementAvailability(amount: Int = 1) {  }
     func increaseAvailability(amount: Int = 1) {  }
     @discardableResult func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool { return false }

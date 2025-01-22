@@ -1,9 +1,9 @@
 import Foundation
 
-public final class ThreePlayersValidatorStrategy: SpendingValidatorStrategy {
-    public init() {  }
+internal final class ThreePlayersValidatorStrategy: SpendingValidatorStrategy {
+    internal init() {  }
     
-    public func validate(purchases: [Player : [any Purchaseable]], for quest: SpendingQuest) -> Bool {
+    internal func validate(purchases: [Player : [any Purchaseable]], for quest: SpendingQuest) -> Bool {
         guard let player1Purchases = purchases[.player1] else { return false }
         guard let player2Purchases = purchases[.player2] else { return false }
         guard let player3Purchases = purchases[.player3] else { return false }

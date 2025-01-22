@@ -4,12 +4,12 @@ internal final class BlitzMachineKey: Coupon, @unchecked Sendable {
     internal let type: CouponType = .blitzMachineCoupon
     private(set) internal var rarity: Rarity
 
-    public var remainingActivations: Int
+    internal var remainingActivations: Int
     
     private let remainingActivationsLock = DispatchSemaphore(value: 1)
     private let rarityLock = DispatchSemaphore(value: 1)
     
-    public let id: String
+    internal let id: String
 
     internal init(rarity: Rarity) {
         self.rarity = rarity

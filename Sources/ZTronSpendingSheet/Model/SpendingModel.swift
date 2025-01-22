@@ -1,6 +1,6 @@
 import Foundation
 
-public final class SpendingModel: @unchecked Sendable, ObservableObject {
+internal final class SpendingModel: @unchecked Sendable, ObservableObject {
     @Published private var coupon: [Player: [any Coupon]] = [:]
     
     @Published private var purchases: [Player: [any Purchaseable]] = [:]
@@ -11,12 +11,12 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     private let validatorLock: DispatchSemaphore = .init(value: 1)
     private let questLock: DispatchSemaphore = .init(value: 1)
     
-    public init(validationStrategy: any SpendingValidatorStrategy) {
+    internal init(validationStrategy: any SpendingValidatorStrategy) {
         self.validationStrategy = validationStrategy
     }
     
 
-    public func validate() -> Bool {
+    internal func validate() -> Bool {
         self.validatorLock.wait()
         
         defer {
@@ -33,7 +33,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     /// - Parameter thePurchase: The new purchase to add.
     /// - Returns: True, if no purchase with the same name existed for `thePurchase.player`, `false` otherwise.
     /// - Complexity: O(`purchases.count`) to test if another purchase already existed.
-    @discardableResult public func appendPurchase(_ thePurchase: any Purchaseable, to player: Player) -> Bool {
+    @discardableResult internal func appendPurchase(_ thePurchase: any Purchaseable, to player: Player) -> Bool {
         guard (self.findPurchaseById(thePurchase.id, for: player) == nil) else { return false }
         guard thePurchase.getAvailability() > 0 else { return false }
         
@@ -62,7 +62,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     
     
     /// - Note: This method doesn't return a deep copy of the found element. It's responsibility of the client to deepCopy it if needed.
-    public final func findPurchaseById(_ id: String, for player: Player) -> (any Purchaseable)? {
+    internal final func findPurchaseById(_ id: String, for player: Player) -> (any Purchaseable)? {
         guard self.purchases[player] != nil else { return nil }
         
         self.purchasesLock.wait()
@@ -130,7 +130,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     ///  - Returns: a deepcopy of the removed element, if any, `nil` otherwise.
     ///
     ///  - Complexity: O(`purchases[for].count`) to find the element to remove.
-    @discardableResult public func removePurchaseById(_ id: String, for player: Player) -> (any Purchaseable)? {
+    @discardableResult internal func removePurchaseById(_ id: String, for player: Player) -> (any Purchaseable)? {
         guard self.purchases[player] != nil else { return nil }
         
         guard let indexToRemove = self.findPurchaseIndexById(id, for: player) else { return nil }
@@ -157,7 +157,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     ///
     /// - Complexity: O(`purchases[withPurchase.player].count`) to find the element to replace.
     /// - Note: Use this method mainly to dynamically attach or detach (i.e. decorate) responsibilities to a purchase.
-    @discardableResult public func replacePurchase(_ id: String, withPurchase: any Purchaseable) -> (any Purchaseable)? {
+    @discardableResult internal func replacePurchase(_ id: String, withPurchase: any Purchaseable) -> (any Purchaseable)? {
         guard let thePlayer = self.findPurchaseIndexById(id)?.getPlayer() else { return nil }
         guard let indexOfElementToReplace = self.findPurchaseIndexById(id, for: thePlayer) else { return nil }
         
@@ -174,14 +174,14 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     
     /// Replaces the current validation strategy with the specified one.
     /// - Parameter theStrategy: A validation strategy to use from the moment this method was called onwards.
-    public func setValidationStrategy(_ theStrategy: any SpendingValidatorStrategy) {
+    internal func setValidationStrategy(_ theStrategy: any SpendingValidatorStrategy) {
         self.validatorLock.wait()
         self.validationStrategy = theStrategy
         self.validatorLock.signal()
     }
     
     
-    @discardableResult public func movePurchase(id: String, to player: Player) -> Bool {
+    @discardableResult internal func movePurchase(id: String, to player: Player) -> Bool {
         guard let thePurchaseIndex = self.findPurchaseIndexById(id) else { return false }
         guard let thePurchase = self.purchases[thePurchaseIndex.getPlayer()]?[thePurchaseIndex.getIndex()] else { return false }
         
@@ -202,7 +202,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     
-    public func getPurchasesForPlayer(_ player: Player) -> [any Purchaseable]? {
+    internal func getPurchasesForPlayer(_ player: Player) -> [any Purchaseable]? {
         guard let purchases = self.purchases[player] else { return nil }
         
         return purchases.map { thePurchase in
@@ -210,7 +210,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         }
     }
     
-    @discardableResult public func increaseAmountOfPurchaseById(_ id: String, for player: Player) -> Bool {
+    @discardableResult internal func increaseAmountOfPurchaseById(_ id: String, for player: Player) -> Bool {
         guard let thePurchase = self.findPurchaseById(id, for: player) else { return false }
         
         thePurchase.increaseAmount()
@@ -220,7 +220,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     
-    @discardableResult public func decreaseAmountOfPurchaseById(_ id: String, for player: Player) -> Bool {
+    @discardableResult internal func decreaseAmountOfPurchaseById(_ id: String, for player: Player) -> Bool {
         guard let thePurchase = self.findPurchaseById(id, for: player) else { return false }
         
         thePurchase.decreaseAmount()
@@ -263,7 +263,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         }
     }
     
-    @discardableResult public final func addConsumable(_ theConsumableType: CouponType, rarity: Rarity = .common, player: Player) -> Bool {
+    @discardableResult internal final func addConsumable(_ theConsumableType: CouponType, rarity: Rarity = .common, player: Player) -> Bool {
         if let couponsForPlyer = self.coupon[player] {
 
             
@@ -307,7 +307,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         }
     }
     
-    @discardableResult public final func removeCouponFromAllPurchases(_ couponType: CouponType) -> Bool {
+    @discardableResult internal final func removeCouponFromAllPurchases(_ couponType: CouponType) -> Bool {
         var removedItemsCount: Int = 0
         
         Player.allCases.forEach { player in
@@ -323,7 +323,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return removedItemsCount > 0
     }
     
-    @discardableResult public final func useCoupon(_ couponType: CouponType, purchaseID: String, for player: Player) -> Bool {
+    @discardableResult internal final func useCoupon(_ couponType: CouponType, purchaseID: String, for player: Player) -> Bool {
         guard let thePurchase = self.findPurchaseById(purchaseID) else { return false }
         guard let activeCouponsForPlayer = self.coupon[player] else { return false }
         guard let activeCoupon = activeCouponsForPlayer.first(where: { coupon in
@@ -337,7 +337,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return couponActivationSuccessful
     }
     
-    @discardableResult public final func releaseCoupon(_ couponType: CouponType, purchaseID: String, for player: Player) -> Bool {
+    @discardableResult internal final func releaseCoupon(_ couponType: CouponType, purchaseID: String, for player: Player) -> Bool {
         guard let thePurchase = self.findPurchaseById(purchaseID) else { return false }
         guard let activeCouponsForPlayer = self.coupon[player] else { return false }
         guard let activeCoupon = activeCouponsForPlayer.first(where: { coupon in
@@ -351,7 +351,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     
-    @discardableResult public final func changeConsumableRarity(consumable: CouponType, to rarity: Rarity, for player: Player) -> Bool {
+    @discardableResult internal final func changeConsumableRarity(consumable: CouponType, to rarity: Rarity, for player: Player) -> Bool {
         guard let couponsForPlayer = self.coupon[player] else { return false }
         guard let theCoupon = couponsForPlayer.first(where: { coupon in
             coupon.type == consumable
@@ -365,7 +365,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return true
     }
     
-    public func canReplaceConsumableRarity(consumable: CouponType, switchingToRarity: Rarity, for player: Player) -> Bool {
+    internal func canReplaceConsumableRarity(consumable: CouponType, switchingToRarity: Rarity, for player: Player) -> Bool {
         guard let theCoupon = self.coupon[player]?.first(where: { coupon in
             coupon.type == consumable
         }) else {
@@ -377,20 +377,20 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     
-    public func getActiveConsumablesByPlayer(_ player: Player) -> [any Coupon]? {
+    internal func getActiveConsumablesByPlayer(_ player: Player) -> [any Coupon]? {
         return self.coupon[player]?.map { someCoupon in
             return someCoupon.makeDeepCopy()
         }
     }
     
-    public func isConsumableActiveForPlayer(_ consumable: CouponType, player: Player) -> Bool {
+    internal func isConsumableActiveForPlayer(_ consumable: CouponType, player: Player) -> Bool {
         guard let couponsForPlayer = self.coupon[player] else { return false }
         return couponsForPlayer.first { activeCoupon in
             return activeCoupon.type == consumable
         } != nil
     }
     
-    public func getRemainingActivations(consumable: CouponType, player: Player) -> Int {
+    internal func getRemainingActivations(consumable: CouponType, player: Player) -> Int {
         guard let couponsForPlayer = self.coupon[player] else { return 0 }
         guard let theConsumable = couponsForPlayer.first(where: { activeCoupon in
             return activeCoupon.type == consumable
@@ -400,7 +400,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     
-    public func getTotalSpent(for player: Player) -> Double? {
+    internal func getTotalSpent(for player: Player) -> Double? {
         guard let purchasesForPlayer = self.purchases[player] else { return nil }
         
         return purchasesForPlayer.reduce(0.0) { partialResult, nextPurchase in
@@ -408,7 +408,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         }
     }
     
-    public func getCurrentActivations(of consumable: CouponType, for player: Player) -> Int? {
+    internal func getCurrentActivations(of consumable: CouponType, for player: Player) -> Int? {
         guard let couponsForPlayer = self.coupon[player] else { return nil }
         guard let requestedCoupon = couponsForPlayer.first(where: { coupon in
             return coupon.type == consumable
@@ -418,7 +418,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     
-    public func changeNumberOfPlayer(to nextPlayerCount: Int) {
+    internal func changeNumberOfPlayer(to nextPlayerCount: Int) {
         assert(nextPlayerCount >= 2 && nextPlayerCount <= 4)
         
         for player in Player.allCases {
@@ -444,7 +444,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         }
     }
     
-    public func mapPlayerToNumber(_ player: Player) -> Int {
+    internal func mapPlayerToNumber(_ player: Player) -> Int {
         switch player {
         case .player1:
             return 1
@@ -463,7 +463,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         }
     }
     
-    public func getQuest() -> SpendingQuest {
+    internal func getQuest() -> SpendingQuest {
         self.questLock.wait()
         
         defer {
@@ -473,7 +473,7 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
         return self.quest
     }
     
-    public func changeQuest(_ to: SpendingQuest) {
+    internal func changeQuest(_ to: SpendingQuest) {
         self.questLock.wait()
         self.quest = to
         self.questLock.signal()

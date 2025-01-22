@@ -1,6 +1,6 @@
 import Foundation
 
-public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @unchecked Sendable {
+internal final class Gate: Purchaseable, ObservableObject, @unchecked Sendable {
     private let name: String
     private let price: Double
     private let description: String
@@ -13,11 +13,11 @@ public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @uncheck
     private let amountSemaphore = DispatchSemaphore(value: 1)
     
     
-    public var coupon: (any Coupon)? = nil
+    internal var coupon: (any Coupon)? = nil
     
-    public let id: String
+    internal let id: String
     
-    public init(name: String, price: Double, description: String, assetsImageName: String, categories: Set<PurchaseableCategory>) {
+    internal init(name: String, price: Double, description: String, assetsImageName: String, categories: Set<PurchaseableCategory>) {
         self.name = name
         self.price = price
         self.id = name
@@ -31,19 +31,19 @@ public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @uncheck
         }
     }
     
-    public func getName() -> String {
+    internal func getName() -> String {
         return self.name
     }
     
-    public func getDescription() -> String {
+    internal func getDescription() -> String {
         return self.description
     }
     
-    public func getAssetsImage() -> String {
+    internal func getAssetsImage() -> String {
         return self.assetsImageName
     }
     
-    public func getCategories() -> Set<PurchaseableCategory> {
+    internal func getCategories() -> Set<PurchaseableCategory> {
         self.categoriesSemaphore.wait()
         
         defer {
@@ -58,7 +58,7 @@ public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @uncheck
         return copy
     }
     
-    public func getPrice() -> Double {
+    internal func getPrice() -> Double {
         if let coupon = self.coupon {
             return self.price * (1 - coupon.getPriceOffPercentage())
         } else {
@@ -66,7 +66,7 @@ public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @uncheck
         }
     }
     
-    public func makeDeepCopy() -> Self {
+    internal func makeDeepCopy() -> Self {
         // Constructor makes a defensive copy of categories anyway
         self.categoriesSemaphore.wait()
         self.availabilitySemaphore.wait()
@@ -84,7 +84,7 @@ public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @uncheck
         return deepCopy
     }
     
-    public func getAvailability() -> Int {
+    internal func getAvailability() -> Int {
         self.availabilitySemaphore.wait()
         
         defer {
@@ -94,7 +94,7 @@ public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @uncheck
         return self.availability
     }
     
-    public func decrementAvailability(amount: Int = 1) {
+    internal func decrementAvailability(amount: Int = 1) {
         assert(amount >= 0)
         self.availabilitySemaphore.wait()
         
@@ -105,7 +105,7 @@ public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @uncheck
         self.availability = max(self.availability - amount, 0)
     }
     
-    public func increaseAvailability(amount: Int = 1) {
+    internal func increaseAvailability(amount: Int = 1) {
         assert(amount >= 0)
         
         self.availabilitySemaphore.wait()
@@ -118,11 +118,11 @@ public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @uncheck
     }
     
     
-    public func getCompatibleCoupons() -> [CouponType] {
+    internal func getCompatibleCoupons() -> [CouponType] {
         return [.skeletonKey]
     }
     
-    public func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool {
+    internal func applyCouponIfCompatible(_ coupon: any Coupon) -> Bool {
         if self.getCompatibleCoupons().contains(coupon.type) {
             self.coupon = coupon
             coupon.use()
@@ -132,7 +132,7 @@ public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @uncheck
         }
     }
 
-    @discardableResult public func removeCoupon(_ coupon: CouponType) -> Bool {
+    @discardableResult internal func removeCoupon(_ coupon: CouponType) -> Bool {
         guard let currentCoupon = self.coupon else { return false }
         
         if currentCoupon.type == coupon {
@@ -144,8 +144,8 @@ public final class Gate: PurchaseableWeaponDecorator, ObservableObject, @uncheck
         }
     }
     
-    public func getAmount() -> Int { return 1 }
-    public func increaseAmount() { }
-    public func decreaseAmount() { }
+    internal func getAmount() -> Int { return 1 }
+    internal func increaseAmount() { }
+    internal func decreaseAmount() { }
 
 }

@@ -1,5 +1,5 @@
 import Foundation
 
-public protocol Cloneable {
+internal protocol Cloneable {
     func makeDeepCopy() -> Self
 }

@@ -1,10 +1,10 @@
 import Foundation
 
-public protocol SpendingValidatorStrategy: Sendable {
+internal protocol SpendingValidatorStrategy: Sendable {
     func validate(purchases: [Player: [any Purchaseable]], for quest: SpendingQuest) -> Bool
 }
 
-public extension SpendingValidatorStrategy {
+internal extension SpendingValidatorStrategy {
     static func makeStrategyFor(players: Int) -> any SpendingValidatorStrategy {
         assert(players >= 2 && players <= 4)
         

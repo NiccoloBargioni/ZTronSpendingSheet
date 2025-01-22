@@ -51,8 +51,8 @@ public struct SpendingHome: View {
                 type: .refundCoupon
             ),
             .init(
-                icon: "wwii.side.quests.spending.coupon.blitz.machine.coupon",
-                name: "wwii.side.quests.spending.coupon.blitz.machine.coupon".fromLocalized(),
+                icon: "wwii.side.quests.spending.coupon.blitz.machine.key",
+                name: "wwii.side.quests.spending.coupon.blitz.machine.key".fromLocalized(),
                 type: .blitzMachineCoupon
             ),
         ],
@@ -90,7 +90,7 @@ public struct SpendingHome: View {
                                                     }
                                                 }
                                         } else {
-                                            Text("wwii.side.quests.spending.category.\(category.rawValue.lowercased())")
+                                            Text("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized())
                                                 .font(.subheadline.weight(.bold))
                                                 .foregroundStyle(Color(UIColor.systemBackground))
                                                 .padding(.vertical, 5)
@@ -349,7 +349,7 @@ public struct SpendingHome: View {
                     }
                 } label: {
                     HStack(alignment: .center) {
-                        Text("\(String(describing: self.currentPlayerForCart).lowercased().capitalized)")
+                        Text("wwii.side.quests.spending.common.\(self.currentPlayerForCart.rawValue.lowercased())".fromLocalized())
                             .font(.callout.weight(.medium))
                             .foregroundStyle(.secondary)
                             .padding(.vertical, 7)

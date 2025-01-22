@@ -35,10 +35,11 @@ internal struct TopbarItemShopWindow: View {
               .clear
             )
             .frame(width: Self.radius, height: Self.radius)
+            
             Image(self.icon, bundle: .module)
-            .resizable()
-            .frame(width: Self.radius * 0.65, height: Self.radius * 0.65)
-            .clipShape(Circle())
+                .resizable()
+                .frame(width: Self.radius * 0.65, height: Self.radius * 0.65)
+                .clipShape(Circle())
         }
     }
 }

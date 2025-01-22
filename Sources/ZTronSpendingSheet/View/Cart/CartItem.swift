@@ -105,7 +105,7 @@ internal struct CartItem: View {
                     .fill(.clear)
                     .frame(width: 44, height: 44)
                 
-                Image(logo)
+                Image(logo, bundle: .module)
                     .resizable()
                     .frame(width: 44 * 0.65, height: 44 * 0.65)
                     .clipShape(Circle())

@@ -105,13 +105,13 @@ internal struct ShoppingItemCard: View {
     internal static func mapCouponTypeToImageName(_ coupon: CouponType) -> String {
         switch coupon {
         case .skeletonKey:
-            return "skeletonKey"
+            return "wwii.side.quests.spending.coupon.skeleton.key"
         case .refundCoupon:
-            return "refundCoupon"
+            return "wwii.side.quests.spending.coupon.refund.coupon"
         case .blitzMachineCoupon:
-            return "blitzMachineCoupon"
+            return "wwii.side.quests.spending.coupon.blitz.machine.key"
         case .mysteryBoxKey:
-            return "mysteryBoxKey"
+            return "wwii.side.quests.spending.coupon.mystery.box.key"
         }
     }
 }    

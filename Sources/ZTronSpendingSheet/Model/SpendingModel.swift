@@ -5,9 +5,11 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
     
     @Published private var purchases: [Player: [any Purchaseable]] = [:]
     private var validationStrategy: any SpendingValidatorStrategy
+    private var quest: SpendingQuest = .pommel
     
     private let purchasesLock: DispatchSemaphore = .init(value: 1)
     private let validatorLock: DispatchSemaphore = .init(value: 1)
+    private let questLock: DispatchSemaphore = .init(value: 1)
     
     public init(validationStrategy: any SpendingValidatorStrategy) {
         self.validationStrategy = validationStrategy
@@ -16,12 +18,13 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
 
     public func validate() -> Bool {
         self.validatorLock.wait()
+        
+        defer {
+            self.validatorLock.signal()
+        }
+        
         // private array of immutable objects likely doesn't need deepcopy
-        let isValid = self.validationStrategy.validate(purchases: self.purchases)
-        
-        self.validatorLock.signal()
-        
-        return isValid
+        return self.validationStrategy.validate(purchases: self.purchases, for: self.quest)
     }
     
     /// Adds another purchase to the lists of purchased items for the player the purchase belongs to..
@@ -458,5 +461,21 @@ public final class SpendingModel: @unchecked Sendable, ObservableObject {
             
             return Int("\(playerNumber)") ?? 0
         }
+    }
+    
+    public func getQuest() -> SpendingQuest {
+        self.questLock.wait()
+        
+        defer {
+            self.questLock.signal()
+        }
+        
+        return self.quest
+    }
+    
+    public func changeQuest(_ to: SpendingQuest) {
+        self.questLock.wait()
+        self.quest = to
+        self.questLock.signal()
     }
 }

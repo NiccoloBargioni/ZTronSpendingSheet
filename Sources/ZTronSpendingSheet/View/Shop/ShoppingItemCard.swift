@@ -44,7 +44,7 @@ internal struct ShoppingItemCard: View {
             
             Group {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(self.purchaseable.getName().uppercased().fromLocalized())
+                    Text(self.purchaseable.getName().fromLocalized().uppercased())
                         .font(.title2.weight(.black))
                     
                     Text(self.purchaseable.getDescription().fromLocalized())

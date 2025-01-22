@@ -89,7 +89,7 @@
         }
       }
     },
-    "wwii.side.quests.spending.category.misc" : {
+    "wwii.side.quests.spending.category.miscellaneous" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {

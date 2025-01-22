@@ -44,10 +44,10 @@ internal struct ShoppingItemCard: View {
             
             Group {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(self.purchaseable.getName().uppercased())
+                    Text(self.purchaseable.getName().uppercased().fromLocalized())
                         .font(.title2.weight(.black))
                     
-                    Text(self.purchaseable.getDescription())
+                    Text(self.purchaseable.getDescription().fromLocalized())
                         .foregroundStyle(.gray)
                         .font(.subheadline.weight(.bold))
 

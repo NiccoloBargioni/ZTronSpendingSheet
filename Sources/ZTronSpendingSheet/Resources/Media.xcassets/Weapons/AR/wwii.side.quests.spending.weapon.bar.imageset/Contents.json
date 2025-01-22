@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "BAR.heic",
       "idiom" : "universal",
       "scale" : "1x"
     },

@@ -1,6 +1,6 @@
 import Foundation
 
-internal enum SpendingQuest: Sendable {
+public enum SpendingQuest: Sendable {
     case pommel
     case easterEgg
 }

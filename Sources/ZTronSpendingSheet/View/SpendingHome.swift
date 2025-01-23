@@ -10,7 +10,7 @@ public struct SpendingHome: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.verticalSizeClass) private var vSizeClass
     @Namespace private var animationsNS
-    
+    private let quest: SpendingQuest
     
     @State private var isPlayerDialogPresenting: Bool = false
     @State private var lastPurchase: (any Purchaseable)? = nil
@@ -30,11 +30,13 @@ public struct SpendingHome: View {
         return "wwii.side.quests.spending.common.\(self.currentPlayerForCart.rawValue.lowercased())".fromLocalized()
     }
     
-    public init() {
+    public init(quest: SpendingQuest) {
         let appearance = UINavigationBarAppearance()
             appearance.shadowColor = .clear
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        
+        self.quest = quest
     }
     
     @StateObject private var topbarModel: SpendingSheetTopbarModel = .init(
@@ -440,7 +442,7 @@ public struct SpendingHome: View {
             }
         }
         .task {
-            self.spendingModel.changeQuest(.easterEgg)
+            self.spendingModel.changeQuest(self.quest)
         }
 
     }

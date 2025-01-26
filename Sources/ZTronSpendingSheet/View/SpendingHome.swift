@@ -444,6 +444,7 @@ public struct SpendingHome: View {
         .task {
             self.spendingModel.changeQuest(self.quest)
         }
+        .clipped()
 
     }
     

@@ -290,7 +290,7 @@ internal let spendingPurchaseables: [any Purchaseable] = [
         price: 1000.0,
         description: "wwii.side.quests.spending.gate.artillery.bunker.electric.cherry.side.caption",
         assetsImageName: "wwii.side.quests.spending.gate.artillery.bunker.electric.cherry.side",
-        categories: [.mandatory]
+        categories: []
     ),
     
     // MARK: - MISCELLANEOUS

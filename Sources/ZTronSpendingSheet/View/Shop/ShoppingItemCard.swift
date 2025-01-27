@@ -55,7 +55,7 @@ internal struct ShoppingItemCard: View {
                             dark: Color(red: 255/255, green: 168/255, blue: 168/255)
                         )
                         .material(
-                            light: Color(red: 224/255, green: 49/255, blue: 49/255),
+                            light: Color(red: 250/255, green: 82/255, blue: 134/255),
                             dark: Color(red: 250/255, green: 82/255, blue: 82/255).opacity(0.15)
                         )
                 }

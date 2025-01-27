@@ -3,8 +3,6 @@ import SwiftUI
 struct Chip: View {
     private let text: String
     
-    private var highlight = Color.rgba(12, 93, 86)
-    private var soft = Color.rgba(94, 234, 212)
     private var fontWeight: Font.Weight? = .semibold
     private var leftComponent: (() -> AnyView?)? = nil
     private var rightComponent: (() -> AnyView)? = nil
@@ -21,12 +19,11 @@ struct Chip: View {
                 leftComponent()
             }
 
-            
-            Text(text)
-                .font(.caption)
-                .foregroundColor(self.colorScheme == .dark ? self.soft : self.highlight)
-                .fontWeight(self.fontWeight)
-                .id(text)
+            Text(text.uppercased())
+                .font(.system(size: 14, weight: .heavy))
+                .foregroundColor(foregroundColor)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
             
             if let rightComponent = self.rightComponent {
                 rightComponent()
@@ -36,14 +33,27 @@ struct Chip: View {
         .padding(.vertical, 8)
         .background {
             Capsule()
-                .fill(/*self.colorScheme == .dark ? self.highlight : self.soft.opacity(0.3)*/ .clear)
+                .fill(.clear)
                 .overlay {
                     Capsule()
-                        .stroke(self.colorScheme == .dark ? self.soft : self.highlight, lineWidth: 0.3)
-                        .padding(0.3)
+                        .background(backgroundColor)
+                        .clipShape(Capsule())
                 }
         }
         .contentShape(Capsule())
+    }
+    
+    // Colors adapt to the color scheme
+    private var foregroundColor: Color {
+        // Text color: #74c0fc for dark mode
+        self.colorScheme == .light ? Color(red: 250/255, green: 250/255, blue: 251/255) :
+            Color(red: 116/255, green: 192/255, blue: 252/255)
+    }
+    
+    private var backgroundColor: Color {
+        self.colorScheme == .dark
+            ? Color(red: 34/255, green: 139/255, blue: 230/255).opacity(0.15) // Light mode: #228be6
+            : Color(red: 34/255, green: 139/255, blue: 230/255) // Dark mode: #74c0fc
     }
 }
 
@@ -52,6 +62,7 @@ struct Chip: View {
 }
 
 extension Chip {
+    /*
     func highlightColor(_ color: Color) -> Self {
         var copy = self
         copy.highlight = color
@@ -62,7 +73,7 @@ extension Chip {
         var copy = self
         copy.soft = color
         return copy
-    }
+    }*/
     
     func fontWeight(_ weight: Font.Weight?) -> Self {
         var copy = self

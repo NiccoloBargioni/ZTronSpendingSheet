@@ -18,14 +18,8 @@ internal struct ShoppingItemCard: View {
     internal var body: some View {
         VStack(spacing: 16) {
             HStack {
-                Text("wwii.side.quests.spending.category.\(purchaseable.getCategories().first!.rawValue.lowercased())".fromLocalized().uppercased())
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(Color.blue)
-                    .cornerRadius(12)
+                Chip(text: "wwii.side.quests.spending.category.\(purchaseable.getCategories().first!.rawValue.lowercased())".fromLocalized().uppercased())
+                
                 Spacer()
             }
 
@@ -51,17 +45,11 @@ internal struct ShoppingItemCard: View {
                     .fontWeight(.bold)
                     .foregroundColor(SwiftUI.Color.blue)
                 Spacer()
+                
                 Button(action: {
                     onPurchaseTapped?(self.purchaseable)
                 }) {
-                    Text("wwii.side.quests.spending.home.shop.add.to.cart.label".fromLocalized())
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Color.blue)
-                        .cornerRadius(12)
+                    Chip(text: "wwii.side.quests.spending.home.shop.add.to.cart.label".fromLocalized())
                 }
             }
         }

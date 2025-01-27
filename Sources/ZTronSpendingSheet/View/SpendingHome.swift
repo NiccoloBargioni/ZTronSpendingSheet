@@ -67,7 +67,7 @@ public struct SpendingHome: View {
     
     public var body: some View {
         AxisTabView(selection: $selection, constant: ATConstant(axisMode: .bottom)) { state in
-            ATBasicStyle(state, color: Color(UIColor.systemBackground))
+            ATBasicStyle(state, color: Color("Brand.500", bundle: .module))
         } content: {
             ScalingHeaderScrollView {
                 VStack(alignment: .leading, spacing: 0) {
@@ -178,11 +178,12 @@ public struct SpendingHome: View {
             .tabItem(tag: 0, normal: {
                 Image(systemName: "tag")
                     .font(.system(size: 16))
+                    .foregroundStyle(Color(.primary))
 
             }, select: {
                 Image(systemName: "tag")
                     .font(.system(size: 20, weight: .bold))
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(Color("BrandHighlight", bundle: .module))
             })
             
             // MARK: - CART
@@ -281,10 +282,11 @@ public struct SpendingHome: View {
             .tabItem(tag: 1, normal: {
                 Image(systemName: "cart")
                     .font(.system(size: 16))
+                    .foregroundStyle(Color(.label))
             }, select: {
                 Image(systemName: "cart")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(Color("Brand.500", bundle: .module))
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(Color("BrandHighlight", bundle: .module))
             })
             .onChange(of: self.currentPlayerForCart) { nextPlayer in
                 

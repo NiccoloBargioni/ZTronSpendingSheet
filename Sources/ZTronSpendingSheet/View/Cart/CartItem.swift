@@ -80,6 +80,7 @@ internal struct CartItem: View {
                 .padding(.top, 4)
             }
             
+            /*
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(self.thePurchase.getCompatibleCoupons(), id: \.self) { decorator in
@@ -94,8 +95,9 @@ internal struct CartItem: View {
                 }
             }
             .padding(.vertical, 5)
+             */
         }
-        .padding()
+        .padding(.vertical)
         .frame(maxWidth: .infinity)
         .background(
             self.colorScheme == .light ?

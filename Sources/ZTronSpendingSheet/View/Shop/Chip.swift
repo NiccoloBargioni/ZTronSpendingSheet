@@ -21,7 +21,7 @@ struct Chip: View {
     }
     
     var body: some View {
-        HStack {
+        HStack(alignment: .center, spacing: 12) {
             if let leftComponent = self.leftComponent {
                 leftComponent()
                     .tint(
@@ -34,8 +34,6 @@ struct Chip: View {
                 .foregroundColor(
                     self.colorScheme == .light ? self.tintLight ?? self.foregroundColor : self.tintDark ?? self.foregroundColor
                 )
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
             
             if let rightComponent = self.rightComponent {
                 rightComponent()
@@ -44,8 +42,8 @@ struct Chip: View {
                     )
             }
         }
-        .padding(.horizontal, 24)
-        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
         .background {
             Capsule()
                 .fill(.clear)

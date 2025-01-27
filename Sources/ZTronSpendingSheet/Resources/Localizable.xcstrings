@@ -32,6 +32,12 @@
     "%lld Players Spending sheet" : {
 
     },
+    "+" : {
+
+    },
+    "−" : {
+
+    },
     "Which player do you want to visit the cart for" : {
 
     },
@@ -420,6 +426,9 @@
     },
     "wwii.side.quests.spending.gate.artillery.bunker.electric.cherry.side.caption" : {
       "extractionState" : "manual"
+    },
+    "WWII.side.quests.spending.gate.artillery.bunker.electric.cherry.side.caption" : {
+
     },
     "wwii.side.quests.spending.gate.artillery.bunker.melee.side" : {
       "extractionState" : "manual",
@@ -1245,9 +1254,6 @@
     },
     "wwii.side.quests.spending.weapon.waffe29.caption" : {
       "extractionState" : "manual"
-    },
-    "x %lld" : {
-
     }
   },
   "version" : "1.0"

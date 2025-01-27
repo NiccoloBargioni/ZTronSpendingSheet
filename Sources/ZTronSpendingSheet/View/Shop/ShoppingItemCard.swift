@@ -19,14 +19,13 @@ internal struct ShoppingItemCard: View {
         VStack(spacing: 16) {
             HStack {
                 Chip(text: "wwii.side.quests.spending.category.\(purchaseable.getCategories().first!.rawValue.lowercased())".fromLocalized().uppercased())
-                
                 Spacer()
             }
 
             Image(self.purchaseable.getAssetsImage(), bundle: .module)
                 .resizable()
-                .scaledToFill()
-                .frame(height: 200)
+                .frame(maxWidth: .infinity)
+                .aspectRatio(16.0/9.0, contentMode: .fill)
                 .clipped()
                 .cornerRadius(16)
 
@@ -44,6 +43,7 @@ internal struct ShoppingItemCard: View {
                     .font(.title3)
                     .fontWeight(.bold)
                     .foregroundColor(SwiftUI.Color.blue)
+                
                 Spacer()
                 
                 Button(action: {

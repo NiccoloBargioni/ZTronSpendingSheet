@@ -8,11 +8,101 @@ internal struct CartItem: View {
     internal var decoratorActivationsCount: ((CouponType) -> Int?)? = nil
     internal var shouldIncludeCoupon: ((CouponType) -> Bool)? = nil
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     internal init(purchaseable: any Purchaseable) {
         self.thePurchase = purchaseable
     }
     
     internal var body: some View {
+        HStack(spacing: 16) {
+            Image(thePurchase.getAssetsImage(), bundle: .module)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 80, height: 80)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .clipped()
+
+            // Content
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text(thePurchase.getName().fromLocalized())
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+
+                    Spacer()
+
+                    Text("\(thePurchase.getPrice() * CGFloat(thePurchase.getAmount()), specifier: "%.1f") ⚡")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
+                }
+
+                Text("WWII.side.quests.spending.gate.artillery.bunker.electric.cherry.side.caption")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+
+                HStack {
+                    Spacer()
+
+                    HStack(spacing: 0) {
+                        Button(action: {
+                            if thePurchase.getAmount() > 1 {
+                                self.onDecrement?()
+                            }
+                        }) {
+                            Text("−")
+                                .frame(width: 32, height: 32)
+                                .foregroundColor(self.thePurchase.getAmount() > 1 ? .primary : .gray)
+                        }
+
+                        Text("\(self.thePurchase.getAmount())")
+                            .frame(width: 32, height: 32)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(8)
+
+                        Button(action: {
+                            self.onIncrement?()
+                        }) {
+                            Text("+")
+                                .frame(width: 32, height: 32)
+                                .foregroundColor(.primary)
+                        }
+                    }
+                    .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+                }
+                .padding(.top, 4)
+            }
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(self.thePurchase.getCompatibleCoupons(), id: \.self) { decorator in
+                        if self.shouldIncludeCoupon?(decorator) ?? true {
+                            DecoratorView(
+                                logo: ShoppingItemCard.mapCouponTypeToImageName(decorator),
+                                isActive: self.thePurchase.coupon?.type == decorator) {
+                                    self.onDecoratorTapped?(decorator)
+                                }
+                        }
+                    }
+                }
+            }
+            .padding(.vertical, 5)
+        }
+        .padding()
+        .background(
+            self.colorScheme == .light ?
+                Color(red: 248/255, green: 249/255, blue: 250/255) : Color(uiColor: .systemGray6))
+        .cornerRadius(16)
+        .shadow(radius: self.colorScheme == .light ? 1 : 4)
+        .padding(.horizontal)
+        
+        
+        /*
         HStack(alignment: .top, spacing: 20) {
             Text("").frame(maxWidth: 0)
             
@@ -82,6 +172,7 @@ internal struct CartItem: View {
             
             Spacer()
         }
+        */
     }
     
     @ViewBuilder private func DecoratorView(

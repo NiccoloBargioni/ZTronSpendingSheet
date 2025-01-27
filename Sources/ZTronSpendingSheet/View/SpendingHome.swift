@@ -258,6 +258,7 @@ public struct SpendingHome: View {
                                     .decoratorActivationsCount { coupon in
                                         return self.spendingModel.getRemainingActivations(consumable: coupon, player: self.currentPlayerForCart)
                                     }
+                                    .listRowInsets(EdgeInsets())
 
                             }
                             .onDelete(perform: { index in
@@ -265,9 +266,6 @@ public struct SpendingHome: View {
                                     self.spendingModel.removePurchaseById(purchasesForCurrentPlayer[theIndex].id, for: self.currentPlayerForCart)
                                 }
                             })
-                            .onMove { _, _ in
-                                print("Moving")
-                            }
                         }
                     } else {
                         Text("\(String(describing: self.currentPlayerForCart).lowercased().capitalized) \("wwii.side.quests.spending.home.cart.empty.cart.label".fromLocalized())")

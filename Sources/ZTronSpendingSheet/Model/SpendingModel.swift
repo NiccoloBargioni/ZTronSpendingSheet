@@ -499,7 +499,7 @@ internal final class SpendingModel: @unchecked Sendable, ObservableObject {
                 categories.remove(categoryToRemove)
             }
             
-            for category in purchase.getCategories() {
+            for category in categories {
                 if !(purchasedCategories.contains(category)) {
                     purchasedCategories.insert(category)
                 }

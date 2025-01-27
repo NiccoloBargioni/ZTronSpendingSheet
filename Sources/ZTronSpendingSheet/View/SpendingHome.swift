@@ -178,11 +178,11 @@ public struct SpendingHome: View {
             .tabItem(tag: 0, normal: {
                 Image(systemName: "tag")
                     .font(.system(size: 16))
-                    .foregroundStyle(Color(.primary))
+                    .foregroundStyle(Color(UIColor.label))
 
             }, select: {
                 Image(systemName: "tag")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(Color("BrandHighlight", bundle: .module))
             })
             
@@ -282,7 +282,7 @@ public struct SpendingHome: View {
             .tabItem(tag: 1, normal: {
                 Image(systemName: "cart")
                     .font(.system(size: 16))
-                    .foregroundStyle(Color(.label))
+                    .foregroundStyle(.primary)
             }, select: {
                 Image(systemName: "cart")
                     .font(.system(size: 18, weight: .semibold))

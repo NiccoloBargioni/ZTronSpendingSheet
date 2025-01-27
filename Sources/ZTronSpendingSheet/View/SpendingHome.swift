@@ -98,13 +98,13 @@ public struct SpendingHome: View {
                                         } else {
                                             Text("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized())
                                                 .font(.subheadline.weight(.bold))
-                                                .foregroundStyle(Color(UIColor.systemBackground))
+                                                .foregroundStyle(Color("Brand.500", bundle: .module))
                                                 .padding(.vertical, 5)
                                                 .padding(.horizontal, 20)
                                                 .background {
                                                     if self.currentCategory == category {
                                                         Capsule()
-                                                            .fill(Color(UIColor.label))
+                                                            .fill(Color("BrandHighlight", bundle: .module))
                                                             .matchedGeometryEffect(id: "selected background capsule", in: self.animationsNS)
                                                     }
                                                 }
@@ -117,7 +117,7 @@ public struct SpendingHome: View {
                         }
                         .padding(.vertical)
                         .padding(.horizontal)
-                        .background(.regularMaterial)
+                        .background(Color("Brand.500", bundle: .module))
                         .shadow(radius: 2, y: 1)
                     }
                 }
@@ -283,8 +283,8 @@ public struct SpendingHome: View {
                     .font(.system(size: 16))
             }, select: {
                 Image(systemName: "cart")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundStyle(.orange)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(Color("Brand.500", bundle: .module))
             })
             .onChange(of: self.currentPlayerForCart) { nextPlayer in
                 

@@ -16,6 +16,8 @@ internal struct CartItem: View {
     
     internal var body: some View {
         HStack(spacing: 16) {
+            Text("").frame(maxWidth: 0)
+
             Image(thePurchase.getAssetsImage(), bundle: .module)
                 .resizable()
                 .scaledToFill()
@@ -94,13 +96,13 @@ internal struct CartItem: View {
             .padding(.vertical, 5)
         }
         .padding()
+        .frame(maxWidth: .infinity)
         .background(
             self.colorScheme == .light ?
                 Color(red: 248/255, green: 249/255, blue: 250/255) : Color(uiColor: .systemGray6))
         .cornerRadius(16)
         .shadow(radius: self.colorScheme == .light ? 1 : 4)
         .padding(.horizontal)
-        
         
         /*
         HStack(alignment: .top, spacing: 20) {

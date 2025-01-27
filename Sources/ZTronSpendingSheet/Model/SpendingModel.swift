@@ -480,7 +480,7 @@ internal final class SpendingModel: @unchecked Sendable, ObservableObject {
     }
     
     
-    internal func getCategoriesForPurchases(for player: Player) -> Set<PurchaseableCategory>? {
+    internal func getCategoriesForPurchases(for player: Player) -> [PurchaseableCategory]? {
         guard let purchasesForPlayer = self.purchases[player] else { return nil }
         
         var purchasedCategories: Set<PurchaseableCategory> = .init()
@@ -506,7 +506,9 @@ internal final class SpendingModel: @unchecked Sendable, ObservableObject {
             }
         }
         
-        return purchasedCategories
+        return Array(purchasedCategories).sorted {
+            return $0.rawValue < $1.rawValue
+        }
     }
     
     internal func getAllPurchasesForCategory(for player: Player, category: PurchaseableCategory) -> [any Purchaseable]? {

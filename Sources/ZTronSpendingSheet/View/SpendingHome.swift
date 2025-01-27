@@ -233,7 +233,7 @@ public struct SpendingHome: View {
                             }
                             
                             if let activeCategoriesForCurrentPlayers = self.spendingModel.getCategoriesForPurchases(for: self.currentPlayerForCart) {
-                                ForEach(Array(activeCategoriesForCurrentPlayers), id: \.hashValue) { category in
+                                ForEach(activeCategoriesForCurrentPlayers, id: \.hashValue) { category in
                                     Section("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized()) {
                                         if let purchasesForThisCategory = self.spendingModel.getAllPurchasesForCategory(for: self.currentPlayerForCart, category: category) {
                                             ForEach(purchasesForThisCategory, id: \.id) { thePurchase in

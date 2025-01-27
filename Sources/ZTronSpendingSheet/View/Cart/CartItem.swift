@@ -61,6 +61,7 @@ internal struct CartItem: View {
                                 .frame(width: 32, height: 32)
                                 .foregroundColor(self.thePurchase.getAmount() > 1 ? .primary : .gray)
                         }
+                        .buttonStyle(PlainButtonStyle())
 
                         Text("\(self.thePurchase.getAmount())")
                             .frame(width: 32, height: 32)
@@ -74,6 +75,7 @@ internal struct CartItem: View {
                                 .frame(width: 32, height: 32)
                                 .foregroundColor(.primary)
                         }
+                        .buttonStyle(PlainButtonStyle())
                     }
                     .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                 }
@@ -104,7 +106,7 @@ internal struct CartItem: View {
                 Color(red: 248/255, green: 249/255, blue: 250/255) : Color(uiColor: .systemGray6))
         .cornerRadius(16)
         .shadow(radius: self.colorScheme == .light ? 1 : 4)
-        .padding(.horizontal)
+        // .padding(.horizontal)
         
         /*
         HStack(alignment: .top, spacing: 20) {

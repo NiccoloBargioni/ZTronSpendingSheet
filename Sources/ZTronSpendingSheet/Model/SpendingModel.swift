@@ -478,4 +478,27 @@ internal final class SpendingModel: @unchecked Sendable, ObservableObject {
         self.quest = to
         self.questLock.signal()
     }
+    
+    
+    internal func getCategoriesForPurchases(for player: Player) -> Set<PurchaseableCategory>? {
+        guard let purchasesForPlayer = self.purchases[player] else { return nil }
+        
+        var purchasedCategories: Set<PurchaseableCategory> = .init()
+        
+        purchasedCategories.forEach { category in
+            if !purchasedCategories.contains(category) {
+                purchasedCategories.insert(category)
+            }
+        }
+        
+        return purchasedCategories
+    }
+    
+    internal func getAllPurchasesForCategory(for player: Player, category: PurchaseableCategory) -> [any Purchaseable]? {
+        guard let purchasesForPlayer = self.purchases[player] else { return nil }
+        
+        return purchasesForPlayer.compactMap { purchase in
+            return purchase.getCategories().contains(category) ? purchase : nil
+        }
+    }
 }

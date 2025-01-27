@@ -1,6 +1,6 @@
 import Foundation
 
-internal enum PurchaseableCategory: String, CaseIterable, Identifiable {
+internal enum PurchaseableCategory: String, CaseIterable, Identifiable, Hashable {
     internal var id : String { UUID().uuidString }
 
     case mandatory = "MANDATORY"

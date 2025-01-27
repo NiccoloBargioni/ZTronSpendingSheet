@@ -232,41 +232,50 @@ public struct SpendingHome: View {
                                 }
                             }
                             
-                            ForEach(purchasesForCurrentPlayer, id: \.id) { thePurchase in
-                                CartItem(purchaseable: thePurchase)
-                                    .onIncrement {
-                                       self.spendingModel.increaseAmountOfPurchaseById(thePurchase.id, for: self.currentPlayerForCart)
-                                       self.spendingModel.objectWillChange.send()
-                                   }
-                                    .onDecrement {
-                                       self.spendingModel.decreaseAmountOfPurchaseById(thePurchase.id, for: self.currentPlayerForCart)
-                                       self.spendingModel.objectWillChange.send()
-                                    }.shouldIncludeCoupon { coupon in
-                                        return self.spendingModel.isConsumableActiveForPlayer(coupon, player: self.currentPlayerForCart)
-                                    }.onDecoratorTapped { tappedCouponType in
-                                        if self.spendingModel.isConsumableActiveForPlayer(tappedCouponType, player: self.currentPlayerForCart) {
-                                            if thePurchase.coupon?.type == tappedCouponType {
-                                                self.spendingModel.releaseCoupon(tappedCouponType, purchaseID: thePurchase.id, for: self.currentPlayerForCart)
-                                            } else {
-                                                if self.spendingModel.getRemainingActivations(consumable: tappedCouponType, player: self.currentPlayerForCart) > 0 {
-                                                    self.spendingModel.useCoupon(tappedCouponType, purchaseID: thePurchase.id, for: self.currentPlayerForCart)
-                                                }
-                                            }
-                                        }
-                                        
-                                        self.spendingModel.objectWillChange.send()
-                                    }
-                                    .decoratorActivationsCount { coupon in
-                                        return self.spendingModel.getRemainingActivations(consumable: coupon, player: self.currentPlayerForCart)
-                                    }
-                                    .listRowInsets(EdgeInsets())
+                            if let activeCategoriesForCurrentPlayers = self.spendingModel.getCategoriesForPurchases(for: self.currentPlayerForCart) {
+                                ForEach(Array(activeCategoriesForCurrentPlayers), id: \.hashValue) { category in
+                                    Section("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized()) {
+                                        if let purchasesForThisCategory = self.spendingModel.getAllPurchasesForCategory(for: self.currentPlayerForCart, category: category) {
+                                            ForEach(purchasesForThisCategory, id: \.id) { thePurchase in
+                                                CartItem(purchaseable: thePurchase)
+                                                    .onIncrement {
+                                                       self.spendingModel.increaseAmountOfPurchaseById(thePurchase.id, for: self.currentPlayerForCart)
+                                                       self.spendingModel.objectWillChange.send()
+                                                   }
+                                                    .onDecrement {
+                                                       self.spendingModel.decreaseAmountOfPurchaseById(thePurchase.id, for: self.currentPlayerForCart)
+                                                       self.spendingModel.objectWillChange.send()
+                                                    }.shouldIncludeCoupon { coupon in
+                                                        return self.spendingModel.isConsumableActiveForPlayer(coupon, player: self.currentPlayerForCart)
+                                                    }.onDecoratorTapped { tappedCouponType in
+                                                        if self.spendingModel.isConsumableActiveForPlayer(tappedCouponType, player: self.currentPlayerForCart) {
+                                                            if thePurchase.coupon?.type == tappedCouponType {
+                                                                self.spendingModel.releaseCoupon(tappedCouponType, purchaseID: thePurchase.id, for: self.currentPlayerForCart)
+                                                            } else {
+                                                                if self.spendingModel.getRemainingActivations(consumable: tappedCouponType, player: self.currentPlayerForCart) > 0 {
+                                                                    self.spendingModel.useCoupon(tappedCouponType, purchaseID: thePurchase.id, for: self.currentPlayerForCart)
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        self.spendingModel.objectWillChange.send()
+                                                    }
+                                                    .decoratorActivationsCount { coupon in
+                                                        return self.spendingModel.getRemainingActivations(consumable: coupon, player: self.currentPlayerForCart)
+                                                    }
+                                                    .listRowInsets(EdgeInsets())
 
-                            }
-                            .onDelete(perform: { index in
-                                if let theIndex = index.first {
-                                    self.spendingModel.removePurchaseById(purchasesForCurrentPlayer[theIndex].id, for: self.currentPlayerForCart)
+                                            }
+                                            .onDelete(perform: { index in
+                                                if let theIndex = index.first {
+                                                    self.spendingModel.removePurchaseById(purchasesForCurrentPlayer[theIndex].id, for: self.currentPlayerForCart)
+                                                }
+                                            })
+                                        }
+                                    }
                                 }
-                            })
+                            }
+                            
                         }
                     } else {
                         Text("\(String(describing: self.currentPlayerForCart).lowercased().capitalized) \("wwii.side.quests.spending.home.cart.empty.cart.label".fromLocalized())")

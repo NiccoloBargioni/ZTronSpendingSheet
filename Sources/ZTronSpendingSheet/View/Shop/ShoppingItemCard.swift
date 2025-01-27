@@ -51,7 +51,7 @@ internal struct ShoppingItemCard: View {
                 }) {
                     Chip(text: "wwii.side.quests.spending.home.shop.add.to.cart.label".fromLocalized())
                         .tint(
-                            light: Color(red: 255/255, green: 168/255, blue: 168/255), //Color(red: 250/255, green: 250/255, blue: 251/255),
+                            light:Color(red: 250/255, green: 82/255, blue: 134/255), //Color(red: 250/255, green: 250/255, blue: 251/255),
                             dark: Color(red: 255/255, green: 168/255, blue: 168/255)
                         )
                         .material(

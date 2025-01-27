@@ -85,7 +85,7 @@ public struct SpendingHome: View {
                                         if self.currentCategory != category {
                                             Text("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized())
                                                 .font(.subheadline.weight(.semibold))
-                                                .foregroundStyle(.primary)
+                                                .foregroundStyle(Color("BrandPrimary", bundle: .module))
                                                 .padding(.vertical, 5)
                                                 .padding(.horizontal, 20)
                                                 .background {

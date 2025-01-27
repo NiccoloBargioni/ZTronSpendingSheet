@@ -484,10 +484,13 @@ internal final class SpendingModel: @unchecked Sendable, ObservableObject {
         guard let purchasesForPlayer = self.purchases[player] else { return nil }
         
         var purchasedCategories: Set<PurchaseableCategory> = .init()
+        purchasedCategories.remove(.mandatory)
         
-        purchasedCategories.forEach { category in
-            if !purchasedCategories.contains(category) {
-                purchasedCategories.insert(category)
+        purchasesForPlayer.forEach { purchase in
+            for category in purchase.getCategories() {
+                if !(purchasedCategories.contains(category)) {
+                    purchasedCategories.insert(category)
+                }
             }
         }
         
@@ -498,7 +501,7 @@ internal final class SpendingModel: @unchecked Sendable, ObservableObject {
         guard let purchasesForPlayer = self.purchases[player] else { return nil }
         
         return purchasesForPlayer.compactMap { purchase in
-            return purchase.getCategories().contains(category) ? purchase : nil
+            return purchase.getCategories().contains(category) ? purchase.makeDeepCopy() : nil
         }
     }
 }

@@ -484,9 +484,21 @@ internal final class SpendingModel: @unchecked Sendable, ObservableObject {
         guard let purchasesForPlayer = self.purchases[player] else { return nil }
         
         var purchasedCategories: Set<PurchaseableCategory> = .init()
-        purchasedCategories.remove(.mandatory)
         
         purchasesForPlayer.forEach { purchase in
+            var categories = purchase.getCategories()
+            
+            [
+                PurchaseableCategory.smg,
+                PurchaseableCategory.ar,
+                PurchaseableCategory.shotgun,
+                PurchaseableCategory.sniper,
+                PurchaseableCategory.pistol,
+                PurchaseableCategory.mandatory
+            ].forEach { categoryToRemove in
+                categories.remove(categoryToRemove)
+            }
+            
             for category in purchase.getCategories() {
                 if !(purchasedCategories.contains(category)) {
                     purchasedCategories.insert(category)

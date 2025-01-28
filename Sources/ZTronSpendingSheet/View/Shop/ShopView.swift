@@ -100,7 +100,6 @@ internal struct ShopView: View {
             .frame(maxHeight: .infinity, alignment: .top)
         } content: {
             VStack(alignment: .leading, spacing: 0) {
-                Text("IS SEARCHING? \(self.isSearching)")
                 // MARK: - THE CARD
                 Group {
                     if self.vSizeClass == .regular {
@@ -180,6 +179,11 @@ internal struct ShopView: View {
             )
         }
         .clipped()
+        .onChange(of: self.query) { searchText in
+            Task(priority: .userInitiated) {
+                await self.search(text: searchText)
+            }
+        }
     }
     
     nonisolated private func search(text: String) async {

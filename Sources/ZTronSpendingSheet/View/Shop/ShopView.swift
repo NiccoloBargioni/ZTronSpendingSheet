@@ -47,98 +47,21 @@ internal struct ShopView: View {
     }
     
     internal var body: some View {
-        ScalingHeaderScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                // MARK: - THE SECTION SELECTOR
-                ScrollViewReader { scrollProxy in
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(alignment: .center, spacing: 20) {
-                            ForEach(PurchaseableCategory.allCases) { category in
-                                Button {
-                                    withAnimation {
-                                        self.currentCategory = category
-                                        scrollProxy.scrollTo(category.rawValue, anchor: .center)
-                                    }
-                                } label: {
-                                    if self.currentCategory != category {
-                                        Text("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized())
-                                            .font(.subheadline.weight(.semibold))
-                                            .foregroundStyle(Color("BrandHighlight", bundle: .module))
-                                            .padding(.vertical, 5)
-                                            .padding(.horizontal, 20)
-                                            .background {
-                                                if self.currentCategory == category {
-                                                    Capsule()
-                                                        .fill(.clear)
-                                                        .matchedGeometryEffect(id: "selected background capsule", in: self.animationsNS)
-                                                }
-                                            }
-                                    } else {
-                                        Text("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized())
-                                            .font(.subheadline.weight(.bold))
-                                            .foregroundStyle(Color("Brand.500", bundle: .module))
-                                            .padding(.vertical, 5)
-                                            .padding(.horizontal, 20)
-                                            .background {
-                                                if self.currentCategory == category {
-                                                    Capsule()
-                                                        .fill(Color("BrandHighlight", bundle: .module))
-                                                        .matchedGeometryEffect(id: "selected background capsule", in: self.animationsNS)
-                                                }
-                                            }
-                                    }
-                                }
-                                .id(category.rawValue)
-                            }
-                        }
-                        .accentColor(.primary)
-                    }
-                    .padding(.vertical)
-                    .padding(.horizontal)
-                    .background(Color("Brand.500", bundle: .module))
-                    .shadow(radius: 2, y: 1)
+        VStack(alignment: .leading, spacing: 0) {
+            if self.vSizeClass == .regular || self.vSizeClass == .compact && !self.isSearching {
+                ScalingHeaderScrollView {
+                    self.CategoryPinnedHeader()
+                } content: {
+                    self.Shop()
                 }
-            }
-            .frame(maxHeight: .infinity, alignment: .top)
-        } content: {
-            VStack(alignment: .leading, spacing: 0) {
-                // MARK: - THE CARD
-                Group {
-                    if self.vSizeClass == .regular {
-                        VStack(alignment: .leading, spacing: 30) {
-                            if self.isSearching {
-                                ForEach(self.searchResults, id: \.id) { item in
-                                    PurchaseableCard(purchaseable: item)
-                                }
-                            } else {
-                                ForEach(spendingPurchaseables.filter {
-                                    return $0.getCategories().contains(self.currentCategory) && $0.getAvailability() > 0
-                                }, id: \.id) { item in
-                                    PurchaseableCard(purchaseable: item)
-                                }
-                            }
-                        }
-                    } else {
-                        VMasonry(columns: 2, spacing: 30) {
-                            if self.isSearching {
-                                ForEach(self.searchResults, id: \.id) { item in
-                                    PurchaseableCard(purchaseable: item)
-                                }
-                            } else {
-                                ForEach(spendingPurchaseables.filter {
-                                    return $0.getCategories().contains(self.currentCategory) && $0.getAvailability() > 0
-                                }, id: \.id) { item in
-                                    PurchaseableCard(purchaseable: item)
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding(.vertical)
+                .hideScrollIndicators()
+                .height(min: 63, max: 63)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            } else {
+                self.Shop()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }
         }
-        .hideScrollIndicators()
-        .height(min: 63, max: 63)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .toast(isPresenting: self.$isToastPresenting, duration: 2.0, tapToDismiss: true) {
             AlertToast(
@@ -189,5 +112,98 @@ internal struct ShopView: View {
             .disabled(
                 purchaseable.getAvailability() <= 0
             )
+    }
+    
+    @ViewBuilder private func CategoryPinnedHeader() -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // MARK: - THE SECTION SELECTOR
+            ScrollViewReader { scrollProxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .center, spacing: 20) {
+                        ForEach(PurchaseableCategory.allCases) { category in
+                            Button {
+                                withAnimation {
+                                    self.currentCategory = category
+                                    scrollProxy.scrollTo(category.rawValue, anchor: .center)
+                                }
+                            } label: {
+                                if self.currentCategory != category {
+                                    Text("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized())
+                                        .font(.subheadline.weight(.semibold))
+                                        .foregroundStyle(Color("BrandHighlight", bundle: .module))
+                                        .padding(.vertical, 5)
+                                        .padding(.horizontal, 20)
+                                        .background {
+                                            if self.currentCategory == category {
+                                                Capsule()
+                                                    .fill(.clear)
+                                                    .matchedGeometryEffect(id: "selected background capsule", in: self.animationsNS)
+                                            }
+                                        }
+                                } else {
+                                    Text("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized())
+                                        .font(.subheadline.weight(.bold))
+                                        .foregroundStyle(Color("Brand.500", bundle: .module))
+                                        .padding(.vertical, 5)
+                                        .padding(.horizontal, 20)
+                                        .background {
+                                            if self.currentCategory == category {
+                                                Capsule()
+                                                    .fill(Color("BrandHighlight", bundle: .module))
+                                                    .matchedGeometryEffect(id: "selected background capsule", in: self.animationsNS)
+                                            }
+                                        }
+                                }
+                            }
+                            .id(category.rawValue)
+                        }
+                    }
+                    .accentColor(.primary)
+                }
+                .padding(.vertical)
+                .padding(.horizontal)
+                .background(Color("Brand.500", bundle: .module))
+                .shadow(radius: 2, y: 1)
+            }
+        }
+        .frame(maxHeight: .infinity, alignment: .top)
+    }
+    
+    @ViewBuilder private func Shop() -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // MARK: - THE CARD
+            Group {
+                if self.vSizeClass == .regular {
+                    VStack(alignment: .leading, spacing: 30) {
+                        if self.isSearching {
+                            ForEach(self.searchResults, id: \.id) { item in
+                                PurchaseableCard(purchaseable: item)
+                            }
+                        } else {
+                            ForEach(spendingPurchaseables.filter {
+                                return $0.getCategories().contains(self.currentCategory) && $0.getAvailability() > 0
+                            }, id: \.id) { item in
+                                PurchaseableCard(purchaseable: item)
+                            }
+                        }
+                    }
+                } else {
+                    VMasonry(columns: 2, spacing: 30) {
+                        if self.isSearching {
+                            ForEach(self.searchResults, id: \.id) { item in
+                                PurchaseableCard(purchaseable: item)
+                            }
+                        } else {
+                            ForEach(spendingPurchaseables.filter {
+                                return $0.getCategories().contains(self.currentCategory) && $0.getAvailability() > 0
+                            }, id: \.id) { item in
+                                PurchaseableCard(purchaseable: item)
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.vertical)
+        }
     }
 }

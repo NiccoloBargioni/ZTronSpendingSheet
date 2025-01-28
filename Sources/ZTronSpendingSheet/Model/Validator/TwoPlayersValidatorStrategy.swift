@@ -9,7 +9,7 @@ internal final class TwoPlayersValidatorStrategy: SpendingValidatorStrategy {
         
         let allPurchases: [any Purchaseable] = .init().appending(contentsOf: player1Purchases).appending(contentsOf: player2Purchases)
         let allMandatoryIncluded = TwoPlayersValidatorStrategy.mandatory.reduce(true) { isValid, nextMandatoryPurchase in
-            return isValid && allPurchases.contains { purchase in
+            return isValid && nextMandatoryPurchase.getAvailability() <= 0 && allPurchases.contains { purchase in
                 return purchase.id == nextMandatoryPurchase.id
             }
         }

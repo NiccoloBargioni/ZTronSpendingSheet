@@ -311,7 +311,7 @@ internal let spendingPurchaseables: [any Purchaseable] = [
         description: "wwii.side.quests.spending.misc.flak.guns.captions",
         assetsImageName: "wwii.side.quests.spending.misc.flak.guns",
         categories: [.mandatory, .misc],
-        availability: Int.max/2
+        availability: 1
     ),
     
     Weapon(
@@ -320,7 +320,7 @@ internal let spendingPurchaseables: [any Purchaseable] = [
         description: "wwii.side.quests.spending.misc.mine.carts.ride.caption",
         assetsImageName: "wwii.side.quests.spending.misc.mine.carts.ride",
         categories: [.mandatory, .misc],
-        availability: Int.max/2
+        availability: 4
     ),
     
     Weapon(

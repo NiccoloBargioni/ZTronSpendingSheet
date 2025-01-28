@@ -67,7 +67,8 @@ public struct SpendingHome: View {
             ShopView(
                 model: self.spendingModel,
                 category: self.$currentCategory,
-                player: self.$currentPlayerForCart
+                player: self.$currentPlayerForCart,
+                searchQuery: self.$searchQuery
             )
             .searchable(
                 text: self.$searchQuery,

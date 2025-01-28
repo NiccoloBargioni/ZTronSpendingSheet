@@ -17,11 +17,6 @@ internal struct ShoppingItemCard: View {
     
     internal var body: some View {
         VStack(spacing: 16) {
-            HStack {
-                Chip(text: "wwii.side.quests.spending.category.\(purchaseable.getCategories().first!.rawValue.lowercased())".fromLocalized().uppercased())
-                Spacer()
-            }
-
             Image(self.purchaseable.getAssetsImage(), bundle: .module)
                 .resizable()
                 .frame(maxWidth: .infinity)

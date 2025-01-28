@@ -15,23 +15,25 @@ internal struct ShopView: View {
     
     @State private var lastPurchase: (any Purchaseable)? = nil
     @State private var isToastPresenting: Bool = false
-
+    
     @ObservedObject private var spendingModel: SpendingModel
     @Namespace private var animationsNS
     
     @State private var searchResults: [any Purchaseable] = .init()
     private let fuse: Fuse = .init()
-
-
+    
+    
     
     private var currentPlayerName: String {
         return "wwii.side.quests.spending.common.\(self.currentPlayer.rawValue.lowercased())".fromLocalized()
     }
     
-    private var purchasesInThisCategory: [any Purchaseable]? {
-        return self.spendingModel.getAllPurchasesForCategory(for: self.currentPlayer, category: self.currentCategory)
+    private var purchaseablesInThisCategory: [any Purchaseable]? {
+        return spendingPurchaseables.filter { purchaseable in
+            purchaseable.getCategories().contains(self.currentCategory)
+        }
     }
-
+    
     internal init(
         model: SpendingModel,
         category: Binding<PurchaseableCategory>,
@@ -106,29 +108,13 @@ internal struct ShopView: View {
                         VStack(alignment: .leading, spacing: 30) {
                             if self.isSearching {
                                 ForEach(self.searchResults, id: \.id) { item in
-                                    ShoppingItemCard(purchaseable: item)
-                                        .onPurchaseTapped { purchase in
-                                            self.lastPurchase = purchase
-                                            self.isToastPresenting.toggle()
-                                            self.spendingModel.appendPurchase(purchase, to: self.currentPlayer)
-                                        }
-                                        .disabled(
-                                            item.getAvailability() <= 0
-                                        )
+                                    PurchaseableCard(purchaseable: item)
                                 }
                             } else {
                                 ForEach(spendingPurchaseables.filter {
                                     return $0.getCategories().contains(self.currentCategory) && $0.getAvailability() > 0
                                 }, id: \.id) { item in
-                                    ShoppingItemCard(purchaseable: item)
-                                        .onPurchaseTapped { purchase in
-                                            self.lastPurchase = purchase
-                                            self.isToastPresenting.toggle()
-                                            self.spendingModel.appendPurchase(purchase, to: self.currentPlayer)
-                                        }
-                                        .disabled(
-                                            item.getAvailability() <= 0
-                                        )
+                                    PurchaseableCard(purchaseable: item)
                                 }
                             }
                         }
@@ -136,29 +122,13 @@ internal struct ShopView: View {
                         VMasonry(columns: 2, spacing: 30) {
                             if self.isSearching {
                                 ForEach(self.searchResults, id: \.id) { item in
-                                    ShoppingItemCard(purchaseable: item)
-                                        .onPurchaseTapped { purchase in
-                                            self.lastPurchase = purchase
-                                            self.isToastPresenting.toggle()
-                                            self.spendingModel.appendPurchase(purchase, to: self.currentPlayer)
-                                        }
-                                        .disabled(
-                                            item.getAvailability() <= 0
-                                        )
+                                    PurchaseableCard(purchaseable: item)
                                 }
                             } else {
                                 ForEach(spendingPurchaseables.filter {
                                     return $0.getCategories().contains(self.currentCategory) && $0.getAvailability() > 0
                                 }, id: \.id) { item in
-                                    ShoppingItemCard(purchaseable: item)
-                                        .onPurchaseTapped { purchase in
-                                            self.lastPurchase = purchase
-                                            self.isToastPresenting.toggle()
-                                            self.spendingModel.appendPurchase(purchase, to: self.currentPlayer)
-                                        }
-                                        .disabled(
-                                            item.getAvailability() <= 0
-                                        )
+                                    PurchaseableCard(purchaseable: item)
                                 }
                             }
                         }
@@ -187,7 +157,7 @@ internal struct ShopView: View {
     }
     
     nonisolated private func search(text: String) async {
-        guard let purchasesInThisCategory = await self.purchasesInThisCategory else { return }
+        guard let purchasesInThisCategory = await self.purchaseablesInThisCategory else { return }
         let searchablePurchases = purchasesInThisCategory.map({ purchase in
             return AnySearchable(purchase)
         })
@@ -201,5 +171,17 @@ internal struct ShopView: View {
         await MainActor.run {
             self.searchResults = matchingPurchases
         }
+    }
+    
+    @ViewBuilder private func PurchaseableCard(purchaseable: any Purchaseable) -> some View {
+        ShoppingItemCard(purchaseable: purchaseable)
+            .onPurchaseTapped { purchase in
+                self.lastPurchase = purchase
+                self.isToastPresenting.toggle()
+                self.spendingModel.appendPurchase(purchase, to: self.currentPlayer)
+            }
+            .disabled(
+                purchaseable.getAvailability() <= 0
+            )
     }
 }

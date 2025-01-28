@@ -150,8 +150,14 @@ internal struct ShopView: View {
         }
         .clipped()
         .onChange(of: self.query) { searchText in
-            Task(priority: .userInitiated) {
-                await self.search(text: searchText)
+            if searchText.isEmpty {
+                self.searchResults = self.purchaseablesInThisCategory?.filter {
+                    return $0.getAvailability() > 0
+                } ?? .init()
+            } else {
+                Task(priority: .userInitiated) {
+                    await self.search(text: searchText)
+                }
             }
         }
     }

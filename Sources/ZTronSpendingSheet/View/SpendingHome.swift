@@ -221,6 +221,7 @@ public struct SpendingHome: View {
         .navigationBarTitle("\(self.numberOfPlayers) Players Spending sheet")
         .navigationBarTitleDisplayMode(.inline)
         .saturation(self.showSideMenu ? 0 : 1)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .sideMenu(isShowing: self.$showSideMenu) {
             VStack(alignment: .leading) {
                 HStack {

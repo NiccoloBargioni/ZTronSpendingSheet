@@ -33,6 +33,10 @@ let package = Package(
         .package(
             url: "https://github.com/ciaranrobrien/SwiftUIMasonry", branch: "main"
         ),
+        
+        .package(
+            url: "https://github.com/ukushu/Ifrit", branch: "main"
+        )
     ],
     targets: [
         .target(
@@ -43,6 +47,7 @@ let package = Package(
                 .product(name: "SwiftUISideMenu", package: "swiftui-side-menu"),
                 .product(name: "SwiftUIMasonry", package: "SwiftUIMasonry"),
                 .product(name: "AlertToast", package: "AlertToast"),
+                .product(name: "Ifrit", package: "Ifrit"),
             ],
             resources: [
                 // Include resource files.

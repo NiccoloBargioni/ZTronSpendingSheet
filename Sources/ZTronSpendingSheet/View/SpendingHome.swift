@@ -6,15 +6,9 @@ import AxisTabView
 import SwiftUISideMenu
 
 public struct SpendingHome: View {
-    @State private var isToastPresenting: Bool = false
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.verticalSizeClass) private var vSizeClass
-    @Namespace private var animationsNS
     private let quest: SpendingQuest
-    
-    @State private var isPlayerDialogPresenting: Bool = false
-    @State private var lastPurchase: (any Purchaseable)? = nil
-    
     
     @State private var numberOfPlayers: Int = 2
     @State private var currentCategory: PurchaseableCategory = .mandatory
@@ -22,6 +16,7 @@ public struct SpendingHome: View {
     @State private var currentPlayerForCart: Player = .player1
     
     @State private var searchQuery: String = ""
+    
     @State private var showSideMenu = false
     
     @StateObject private var spendingModel = SpendingModel(validationStrategy: TwoPlayersValidatorStrategy())
@@ -69,112 +64,15 @@ public struct SpendingHome: View {
         AxisTabView(selection: $selection, constant: ATConstant(axisMode: .bottom)) { state in
             ATBasicStyle(state, color: Color("Brand.500", bundle: .module))
         } content: {
-            ScalingHeaderScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    // MARK: - THE SECTION SELECTOR
-                    ScrollViewReader { scrollProxy in
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(alignment: .center, spacing: 20) {
-                                ForEach(PurchaseableCategory.allCases) { category in
-                                    Button {
-                                        withAnimation {
-                                            self.currentCategory = category
-                                            scrollProxy.scrollTo(category.rawValue, anchor: .center)
-                                        }
-                                    } label: {
-                                        if self.currentCategory != category {
-                                            Text("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized())
-                                                .font(.subheadline.weight(.semibold))
-                                                .foregroundStyle(Color("BrandHighlight", bundle: .module))
-                                                .padding(.vertical, 5)
-                                                .padding(.horizontal, 20)
-                                                .background {
-                                                    if self.currentCategory == category {
-                                                        Capsule()
-                                                            .fill(.clear)
-                                                            .matchedGeometryEffect(id: "selected background capsule", in: self.animationsNS)
-                                                    }
-                                                }
-                                        } else {
-                                            Text("wwii.side.quests.spending.category.\(category.rawValue.lowercased())".fromLocalized())
-                                                .font(.subheadline.weight(.bold))
-                                                .foregroundStyle(Color("Brand.500", bundle: .module))
-                                                .padding(.vertical, 5)
-                                                .padding(.horizontal, 20)
-                                                .background {
-                                                    if self.currentCategory == category {
-                                                        Capsule()
-                                                            .fill(Color("BrandHighlight", bundle: .module))
-                                                            .matchedGeometryEffect(id: "selected background capsule", in: self.animationsNS)
-                                                    }
-                                                }
-                                        }
-                                    }
-                                    .id(category.rawValue)
-                                }
-                            }
-                            .accentColor(.primary)
-                        }
-                        .padding(.vertical)
-                        .padding(.horizontal)
-                        .background(Color("Brand.500", bundle: .module))
-                        .shadow(radius: 2, y: 1)
-                    }
-                }
-                .frame(maxHeight: .infinity, alignment: .top)
-            } content: {
-                VStack(alignment: .leading, spacing: 0) {
-                    // MARK: - THE CARD
-                    Group {
-                        if self.vSizeClass == .regular {
-                            VStack(alignment: .leading, spacing: 30) {
-                                ForEach(spendingPurchaseables.filter {
-                                    return $0.getCategories().contains(self.currentCategory) && $0.getAvailability() > 0
-                                }, id: \.id) { item in
-                                    ShoppingItemCard(purchaseable: item)
-                                        .onPurchaseTapped { purchase in
-                                            self.lastPurchase = purchase
-                                            self.isToastPresenting.toggle()
-                                            self.spendingModel.appendPurchase(purchase, to: self.currentPlayerForCart)
-                                        }
-                                        .disabled(
-                                            item.getAvailability() <= 0
-                                        )
-                                }
-                            }
-                        } else {
-                            VMasonry(columns: 2, spacing: 30) {
-                                ForEach(spendingPurchaseables.filter {
-                                    return $0.getCategories().contains(self.currentCategory) && $0.getAvailability() > 0
-                                }, id: \.id) { item in
-                                    ShoppingItemCard(purchaseable: item)
-                                        .onPurchaseTapped { purchase in
-                                            self.lastPurchase = purchase
-                                            self.isToastPresenting.toggle()
-                                            self.spendingModel.appendPurchase(purchase, to: self.currentPlayerForCart)
-                                        }
-                                        .disabled(
-                                            item.getAvailability() <= 0
-                                        )
-                                }
-                            }
-                        }
-                    }
-                    .padding(.vertical)
-                }
-            }
-            .hideScrollIndicators()
-            .height(min: 63, max: 63)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .toast(isPresenting: self.$isToastPresenting, duration: 2.0, tapToDismiss: true) {
-                AlertToast(
-                    displayMode: .alert,
-                    type: .complete(SwiftUI.Color.green),
-                    title: "\("wwii.side.quests.spending.home.shop.toast.title".fromLocalized()) \(self.lastPurchase?.getName().fromLocalized() ?? "(nil)")",
-                    subTitle: "\("wwii.side.quests.spending.home.shop.toast.subheadline".fromLocalized()) **\(self.currentPlayerName)**"
-                )
-            }
-            .clipped()
+            ShopView(
+                model: self.spendingModel,
+                category: self.$currentCategory,
+                player: self.$currentPlayerForCart
+            )
+            .searchable(
+                text: self.$searchQuery,
+                prompt: "\("wwii.side.quests.spending.home.shop.search.prompt".fromLocalized()) \("wwii.side.quests.spending.category.\(self.currentCategory.rawValue.lowercased())".fromLocalized())"
+            )
             .tabItem(tag: 0, normal: {
                 Image(systemName: "tag")
                     .font(.system(size: 16))
@@ -186,8 +84,7 @@ public struct SpendingHome: View {
                     .foregroundStyle(Color("BrandHighlight", bundle: .module))
             })
             
-            // MARK: - CART
-            
+            //MARK: - CART
             VStack(alignment: .leading) {
                 Picker("Which player do you want to visit the cart for", selection: self.$currentPlayerForCart) {
                     

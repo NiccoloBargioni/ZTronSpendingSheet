@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "ifrit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ukushu/Ifrit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f1f0c7107c3568eccaf54564689817af77098af5"
+      }
+    },
+    {
       "identity" : "scalingheaderscrollview",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/exyte/ScalingHeaderScrollView",

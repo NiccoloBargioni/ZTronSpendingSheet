@@ -621,6 +621,23 @@
         }
       }
     },
+    "wwii.side.quests.spending.home.shop.search.prompt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search in "
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca in "
+          }
+        }
+      }
+    },
     "wwii.side.quests.spending.home.shop.toast.subheadline" : {
       "extractionState" : "manual",
       "localizations" : {

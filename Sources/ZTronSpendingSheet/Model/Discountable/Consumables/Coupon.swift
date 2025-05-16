@@ -17,7 +17,7 @@ extension Coupon {
 }
 
 extension Coupon {
-    static func == (_ lhs: any Coupon, _ rhs: any Coupon) -> Bool {
+    static func == (_ lhs: Self, _ rhs: Self) -> Bool {
         return lhs.type == rhs.type && lhs.rarity == rhs.rarity && lhs.remainingActivations == rhs.remainingActivations
     }
 }

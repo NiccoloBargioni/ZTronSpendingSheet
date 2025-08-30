@@ -19,7 +19,7 @@ let package = Package(
         ),
         
         .package(
-            url: "https://github.com/exyte/ScalingHeaderScrollView", branch: "master"
+            url: "https://github.com/exyte/ScalingHeaderScrollView", branch: "main"
         ),
         
         .package(
